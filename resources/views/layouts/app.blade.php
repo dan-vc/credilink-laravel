@@ -24,7 +24,7 @@
 
 
         <!-- Page Content -->
-        <main class="flex-1 p-8 bg-gray-100">
+        <main class="w-full p-8 bg-gray-100">
             {{ $slot }}
         </main>
     </div>
