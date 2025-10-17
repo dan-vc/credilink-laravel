@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+
 * {
     padding: 0;
     margin: 0;
@@ -7,33 +11,39 @@ body {
     background: linear-gradient(#003366, #0066CC);
     min-height: 100vh;
 }
-.block-1{
+
+.block-1 {
     padding-top: 30px;
     padding-bottom: 30px;
     text-align: center;
 }
 
-.block-2{
+.block-2 {
     gap: 30px;
     display: flex;
     flex-direction: column;
     background-color: bisque;
     width: 1320px;
     margin: auto;
-    padding: 40px 120px 40px 120px;
-    border-radius: 80px 80px 0px 0px;
+    padding: 60px 120px 60px 120px;
+    border-radius: 80px 80px 10px 10px;
+    justify-content: center;
+    align-items: center;
 }
 
-.card{
+.card {
+    width: 100%;
+    justify-content: center;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
 }
 
-.card div{
+.card div {
+    padding: 15px 18px 15px 18px;
     display: flex;
     background-color: white;
     width: 252px;
-    height: 102px;
+    height: 92px;
     border-radius: 10px;
     justify-content: center;
     align-items: center;
@@ -41,22 +51,126 @@ body {
 }
 
 
-.card div img{
+.card div img {
     width: 72px;
     height: 72px;
 }
 
-.card div p{
-    width: 110px;
+.card div p {
+    font-family: "Montserrat", sans-serif;
+    width: 134px;
     color: #003366;
     font-size: 20px;
     font-weight: 700;
 }
 
-.card-2{
+.card-2 {
     display: flex;
+
 }
 
-.card-2 div{
-    
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 576px;
+    background-color: white;
+    padding: 50px;
+    border-radius: 20px;
+    gap: 40px;
+}
+
+.form h1 {
+    font-weight: 600;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 32px;
+    width: 332px;
+}
+
+.form input {
+    width: 476px;
+    height: 44px;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+}
+
+.form label {
+    font-size: 20px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    gap: 5px;
+}
+
+.buttons-social {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: space-between;
+}
+
+.buttons a {
+    font-family: "Montserrat", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 298px;
+    height: 47px;
+    border-radius: 20px 0px 0px 20px;
+    gap: 30px;
+}
+
+.buttons .button-google {
+    background-color: #EB4034;
+}
+
+.buttons .button-github {
+    background-color: #333333;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 173px;
+    height: auto;
+    border-radius: 0px 20px 20px 0px;
+    background-color: #003366;
+    border: none;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    color: white;
+    height: 100%;
+    cursor: pointer;
+}
+
+.card-img {
+    padding: 60px 40px;
+    width: 100%;
+    max-width: 471px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.line{
+    width: 1080px;
+    height: 20px;
+    background-color: white;
+    border-radius: 20px;
 }

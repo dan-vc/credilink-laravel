@@ -35,9 +35,9 @@
         </div>
 
         <div class="card-2">
-            <div class="">
-                <div class="">
-                    <p>Sistema de Entidad Financiera</p>
+            <div class="form">
+                <div>
+                    <h1>Sistema de Entidad Financiera</p>
                 </div>
                 <div>
                     <form method="POST" action="{{ route('login') }}">
@@ -45,47 +45,54 @@
 
                         <!-- Email -->
                         <div>
-                            <label for="email">Email</label>
+                            <label for="email">Usuario</label><br>
                             <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
                                 autocomplete="username">
                             @error('email')
                                 <div style="color: red;">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div><br><br>
 
                         <!-- Password -->
                         <div>
-                            <label for="password">Password</label>
+                            <label for="password">Contraseña</label><br>
                             <input id="password" type="password" name="password" required
                                 autocomplete="current-password">
                             @error('password')
                                 <div style="color: red;">{{ $message }}</div>
                             @enderror
                         </div>
-
+                        <br><br>
                         <!-- Submit -->
-                        <div>
-                            <div>
-                                <div>
+                        <div class="buttons">
+                            <div class="buttons-social">
+                                <a href="" class="button-google">
                                     <img src="{{ Vite::asset('resources/img/login/google.webp') }}" alt="google">
-                                    <a href="">Iniciar Sesión Google</a>
-                                </div>
-                                <div>
+                                    <p>Iniciar Sesión Google</p>
+                                </a>
+                                <a href="" class="button-github">
                                     <img src="{{ Vite::asset('resources/img/login/github.webp') }}" alt="github">
-                                    <a href="">Iniciar Sesión GitHub</a>
-                                </div>
+                                    <p>Iniciar Sesión GitHub</p>
+                                </a>
                             </div>
-                            <button type="submit">Log in</button>
+                            <div class="button-submit">
+                                <button type="submit">
+                                    Entrar
+                                    <img src="{{ Vite::asset('resources/img/login/entrar.webp') }}" alt="entrar">
+
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div>
+            <div class="card-img">
+                <img src="{{ Vite::asset('resources/img/login/imagen.webp') }}" alt="imagen">
                 <img src="{{ Vite::asset('resources/img/login/logo 2.webp') }}" alt="logo 2">
             </div>
         </div>
 
-        <div>
+        <div class="line">
 
         </div>
     </div>
