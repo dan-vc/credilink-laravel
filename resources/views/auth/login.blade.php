@@ -10,82 +10,87 @@
 </head>
 
 <body>
-    <div>
-        <img src="{{ Vite::asset('resources/images/img.png') }}" alt="Logo">
+    <div class="block-1">
+        <img src="{{ Vite::asset('resources/img/login/logo.webp') }}" alt="Logo">
     </div>
 
-    <div>
-        <div>
-            <img src="" alt="">
-            <p>Créditos Rápidos</p>
-        </div>
-        <div>
-            <img src="" alt="">
-            <p>Pagos Rápidos</p>
-        </div>
-        <div>
-            <img src="" alt="">
-            <p>Préstamos sin intereses</p>
-        </div>
-        <div>
-            <img src="" alt="">
-            <p>Máxima Seguridad</p>
-        </div>
-    </div>
-
-    <div>
-        <div>
+    <div class="block-2">
+        <div class="card">
             <div>
-                <p>Sistema de Entidad Financiera</p>
+                <img src="{{ Vite::asset('resources/img/login/creditos.webp') }}" alt="creditos">
+                <p>Créditos Rápidos</p>
             </div>
             <div>
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
+                <img src="{{ Vite::asset('resources/img/login/pagos.webp') }}" alt="pagos">
+                <p>Pagos Rápidos</p>
+            </div>
+            <div>
+                <img src="{{ Vite::asset('resources/img/login/prestamos.webp') }}" alt="prestamos">
+                <p>Préstamos sin intereses</p>
+            </div>
+            <div>
+                <img src="{{ Vite::asset('resources/img/login/seguridad.webp') }}" alt="seguridad">
+                <p>Máxima Seguridad</p>
+            </div>
+        </div>
 
-                    <!-- Email -->
-                    <div>
-                        <label for="email">Email</label>
-                        <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
-                            autocomplete="username">
-                        @error('email')
-                            <div style="color: red;">{{ $message }}</div>
-                        @enderror
-                    </div>
+        <div class="card-2">
+            <div class="">
+                <div class="">
+                    <p>Sistema de Entidad Financiera</p>
+                </div>
+                <div>
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
 
-                    <!-- Password -->
-                    <div>
-                        <label for="password">Password</label>
-                        <input id="password" type="password" name="password" required autocomplete="current-password">
-                        @error('password')
-                            <div style="color: red;">{{ $message }}</div>
-                        @enderror
-                    </div>
+                        <!-- Email -->
+                        <div>
+                            <label for="email">Email</label>
+                            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
+                                autocomplete="username">
+                            @error('email')
+                                <div style="color: red;">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                    <!-- Submit -->
-                    <div>
+                        <!-- Password -->
+                        <div>
+                            <label for="password">Password</label>
+                            <input id="password" type="password" name="password" required
+                                autocomplete="current-password">
+                            @error('password')
+                                <div style="color: red;">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Submit -->
                         <div>
                             <div>
-                                <img src="" alt="">
-                                <a href="">Iniciar Sesión Google</a>
+                                <div>
+                                    <img src="{{ Vite::asset('resources/img/login/google.webp') }}" alt="google">
+                                    <a href="">Iniciar Sesión Google</a>
+                                </div>
+                                <div>
+                                    <img src="{{ Vite::asset('resources/img/login/github.webp') }}" alt="github">
+                                    <a href="">Iniciar Sesión GitHub</a>
+                                </div>
                             </div>
-                            <div>
-                                <img src="" alt="">
-                                <a href="">Iniciar Sesión GitHub</a>
-                            </div>
+                            <button type="submit">Log in</button>
                         </div>
-                        <button type="submit">Log in</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
+            </div>
+            <div>
+                <img src="{{ Vite::asset('resources/img/login/logo 2.webp') }}" alt="logo 2">
             </div>
         </div>
+
         <div>
-            <img src="" alt="">
+
         </div>
     </div>
 
-    <div>
 
-    </div>
 
 
 </body>

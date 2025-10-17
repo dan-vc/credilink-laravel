@@ -7,3 +7,56 @@ body {
     background: linear-gradient(#003366, #0066CC);
     min-height: 100vh;
 }
+.block-1{
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+.block-2{
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
+    background-color: bisque;
+    width: 1320px;
+    margin: auto;
+    padding: 40px 120px 40px 120px;
+    border-radius: 80px 80px 0px 0px;
+}
+
+.card{
+    display: flex;
+    justify-content:space-between;
+}
+
+.card div{
+    display: flex;
+    background-color: white;
+    width: 252px;
+    height: 102px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.card div img{
+    width: 72px;
+    height: 72px;
+}
+
+.card div p{
+    width: 110px;
+    color: #003366;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.card-2{
+    display: flex;
+}
+
+.card-2 div{
+    
+}
