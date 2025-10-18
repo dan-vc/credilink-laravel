@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="bg-white rounded-xl px-4 py-3 mb-3 flex justify-between items-center">
+    <div class="bg-white rounded-xl px-4 py-3 mb-3 flex gap-2 justify-between items-stretch">
         <x-search-input placeholder="Buscar..." />
 
         <x-primary-button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-new-credit')">
@@ -8,7 +8,7 @@
 
 
         <x-modal name="create-new-credit" focusable maxWidth="4xl" :bg="false">
-            <div class="flex items-center gap-5">
+            <div class="flex flex-col items-center gap-5 sm:flex-row">
                 <form method="post" action="" class="p-6 bg-white rounded-xl shadow-xl w-full">
                     @csrf
                     <h2 class="text-xl font-semibold mb-4">
@@ -69,21 +69,23 @@
                 </form>
 
                 <!-- Detalles del Producto Financiero -->
-                <div class="bg-white rounded-xl shadow-xl sm:w-full max-w-72 px-6 py-3">
+                <div class="bg-white rounded-xl shadow-xl w-full sm:max-w-72 px-6 py-3">
                     <h2 class="text-lg font-bold mb-4">
                         Crédito Empresarial
                     </h2>
 
-                    <!-- Tasa de Interés -->
-                    <div class="mb-4">
-                        <x-input-label value="Tasa de Interés" class="mb-1" />
-                        <x-text-input class="block w-full" type="text" value="12.5" disabled />
-                    </div>
+                    <div class="flex flex-row sm:flex-col gap-2">
+                        <!-- Tasa de Interés -->
+                        <div class="mb-4">
+                            <x-input-label value="Tasa de Interés" class="mb-1" />
+                            <x-text-input class="block w-full" type="text" value="12.5" disabled />
+                        </div>
 
-                    <!-- Pazlo Máximo -->
-                    <div class="mb-4">
-                        <x-input-label value="Plazo máximo" class="mb-1" />
-                        <x-text-input class="block w-full" type="text" value="12 meses" disabled />
+                        <!-- Pazlo Máximo -->
+                        <div class="mb-4">
+                            <x-input-label value="Plazo máximo" class="mb-1" />
+                            <x-text-input class="block w-full" type="text" value="12 meses" disabled />
+                        </div>
                     </div>
 
                     <!-- Cantidad min-max -->
@@ -105,7 +107,7 @@
         </h2>
 
         <div class="relative overflow-x-auto flex">
-            <table class="w-full min-w-[1000px] text-sm text-left text-gray-800 font-medium">
+            <table class="w-full min-w-max text-sm text-left text-gray-800 font-medium">
                 <thead class="text-gray-400 fontP-medium border-b border-gray-200">
                     <tr>
                         <th scope="col" class="p-3 font-medium">ID</th>
