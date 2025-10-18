@@ -19,14 +19,16 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen flex">
+    <div class="min-h-screen layout-wrapper">
         @include('layouts.navigation')
 
 
         <!-- Page Content -->
-        <main class="w-full p-8 bg-gray-100">
+        <main class="w-full md:p-8 p-4 bg-gray-100 max-w[1920px]">
             {{ $slot }}
         </main>
+
+        @include('layouts.mobile-navigation')
     </div>
 </body>
 
