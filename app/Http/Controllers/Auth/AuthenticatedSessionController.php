@@ -40,7 +40,7 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return redirect('login');
     }
 
     // LOGIN CON GOOGLE
@@ -64,7 +64,7 @@ class AuthenticatedSessionController extends Controller
             );
 
             Auth::login($user, true);
-            return redirect('/proyectos');
+            return redirect('/dashboard');
         } catch (\Exception $e) {
             return redirect('/login')->withErrors(['google_error' => 'Error iniciando sesión con Google']);
         }
@@ -81,7 +81,7 @@ class AuthenticatedSessionController extends Controller
         try {
             $githubUser = Socialite::driver('github')->user();
 
-            $user = User::updateOrCreate(
+            $user = User::updateOrCreate( 
                 ['email' => $githubUser->getEmail()],
                 [
                     'name' => $githubUser->getName() ?? $githubUser->getNickname(),
@@ -92,7 +92,7 @@ class AuthenticatedSessionController extends Controller
             );
 
             Auth::login($user, true);
-            return redirect('/proyectos');
+            return redirect('/dashboard');
         } catch (\Exception $e) {
             return redirect('/login')->withErrors(['github_error' => 'Error iniciando sesión con GitHub']);
         }

@@ -66,11 +66,11 @@
                         <!-- Submit -->
                         <div class="buttons">
                             <div class="buttons-social">
-                                <a href="" class="button-google">
+                                <a href="{{ route('auth.google') }}" class="button-google">
                                     <img src="{{ Vite::asset('public/img/login/google.webp') }}" alt="google">
                                     <p>Iniciar Sesión Google</p>
                                 </a>
-                                <a href="" class="button-github">
+                                <a href="{{ route('auth.github') }}" class="button-github">
                                     <img src="{{ Vite::asset('public/img/login/github.webp') }}" alt="github">
                                     <p>Iniciar Sesión GitHub</p>
                                 </a>
