@@ -28,7 +28,7 @@ body {
     align-items: center;
     box-sizing: border-box;
     /*Fondo*/
-    background-image: url('/img/login/fondo.webp');
+    background-image: url('../img/login/fondo.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
