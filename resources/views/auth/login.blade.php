@@ -45,7 +45,7 @@
 
                         <!-- Email -->
                         <div>
-                            <label for="email">Usuario</label><br>
+                            <label for="email">Correo</label><br>
                             <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
                                 autocomplete="username">
                             @error('email')

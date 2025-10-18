@@ -1,19 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-
-
 * {
     padding: 0;
     margin: 0;
 }
 
 body {
+    padding: 30px 0px 30px 0px;
     background: linear-gradient(#003366, #0066CC);
     min-height: 100vh;
 }
 
 .block-1 {
-    padding-top: 30px;
     padding-bottom: 30px;
     text-align: center;
 }
@@ -22,32 +20,38 @@ body {
     gap: 30px;
     display: flex;
     flex-direction: column;
-    background-color: bisque;
     width: 1320px;
     margin: auto;
     padding: 60px 120px 60px 120px;
-    border-radius: 80px 80px 10px 10px;
+    border-radius: 10px;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
+    /*Fondo*/
+    background-image: url('../img/login/fondo.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
 }
 
 .card {
     width: 100%;
-    justify-content: center;
     display: flex;
     justify-content: space-between;
 }
 
 .card div {
+    box-sizing: border-box;
     padding: 15px 18px 15px 18px;
     display: flex;
     background-color: white;
     width: 252px;
-    height: 92px;
+    height: 102px;
     border-radius: 10px;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
 }
 
 
@@ -65,8 +69,10 @@ body {
 }
 
 .card-2 {
+    width: 100%;
     display: flex;
-
+    justify-content: space-between;
+    gap: 30px;
 }
 
 .form {
@@ -90,6 +96,8 @@ body {
 }
 
 .form input {
+    padding-left: 20px;
+    box-sizing: border-box;
     width: 476px;
     height: 44px;
     border: 1px solid #D9D9D9;
@@ -168,7 +176,7 @@ button {
     gap: 30px;
 }
 
-.line{
+.line {
     width: 1080px;
     height: 20px;
     background-color: white;
