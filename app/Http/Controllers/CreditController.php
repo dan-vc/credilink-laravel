@@ -8,14 +8,26 @@ use App\Models\FinancialProduct;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CreditController extends Controller
 {
     public function index()
     {
+        // DB::enableQueryLog(); // 🔍 Activa el registro de consultas
+
+        // $credits = Credit::all();   
+
+        // foreach ($credits as $credit) {
+        //     $credit->client->name; // esto provoca N consultas extra
+        //     $credit->approver->name; // esto provoca N consultas extra
+        // }
+        
+        // dd(DB::getQueryLog()); // 🧾 Muestra todas las consultas ejecutadas
+
         $clients = Client::all();
         $products = FinancialProduct::all();
-        $credits = Credit::all();
+        $credits = Credit::with(['client', 'approver'])->get(); // Eager loading para evitar N+1
 
         return view('dashboard', compact('credits', 'clients', 'products'));
     }

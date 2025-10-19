@@ -10,7 +10,7 @@
             </svg>
         </x-nav-link>
 
-        <x-nav-link :href="route('customers')" :active="request()->routeIs('customers')">
+        <x-nav-link :href="route('clients')" :active="request()->routeIs('clients')">
             <svg width="35" height="35" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M12 10.6665C14.2091 10.6665 16 8.87564 16 6.6665C16 4.45736 14.2091 2.6665 12 2.6665C9.79086 2.6665 8 4.45736 8 6.6665C8 8.87564 9.79086 10.6665 12 10.6665Z"

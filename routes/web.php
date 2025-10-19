@@ -3,7 +3,11 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CreditController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,9 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::get('dashboard', [CreditController::class, 'index'])->name('dashboard');
     Route::post('dashboard', [CreditController::class, 'store'])->name('dashboard.store');
     
-    Route::get('users', function () { return view('users'); })->name('users');
-    Route::get('customers', function () { return view('customers'); })->name('customers');
-    Route::get('reports', function () { return view('reports'); })->name('reports');
+    Route::get('users', [UserController::class, 'index'])->name('users');
+    Route::get('roles', [RoleController::class, 'index'])->name('roles');
+    Route::get('clients', [ClientController::class, 'index'])->name('clients');
+    Route::get('reports', [ReportController::class, 'index'])->name('reports');
 });
 
 Route::get('/auth/google', [AuthenticatedSessionController::class, 'redirectToGoogle'])->name('auth.google');

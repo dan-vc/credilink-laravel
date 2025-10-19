@@ -3,7 +3,7 @@
         <x-search-input placeholder="Buscar..." id="search-input" />
 
         <div class="flex gap-2">
-            <x-secondary-button href="{{ route('roles') }}">
+            <x-secondary-button href="{{ route('dashboard') }}">
                 Gestionar Roles
             </x-secondary-button>
 
