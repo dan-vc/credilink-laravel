@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Variables personalizadas */
+@layer base {
+  :root {
+    --color-primary: #003366;
+    --color-secondary: #FFB400;
+  }
+}
+
+.layout-wrapper {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+@media screen and (max-width:768px) {
+  .layout-wrapper {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 1fr auto;
+  }
+}

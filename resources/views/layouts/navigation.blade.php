@@ -1,71 +1,150 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-primary w-full max-w-72 hidden md:flex">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
-                </div>
-
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
+    <div class="p-4 sm:p-5 flex flex-col justify-between h-full">
+        <div class="flex flex-col">
+            <!-- Logo -->
+            <div class="shrink-0 flex items-center">
+                <a href="{{ route('dashboard') }}">
+                    <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                </a>
             </div>
 
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            <!-- Navigation Links -->
+            <div class="hidden sm:flex flex-col gap-5 mt-16">
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <svg width="22" height="23" viewBox="0 0 22 23" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 3.4165H22V19.9165H0M0 8.9165H22V6.1665H0M2.75 17.1665H8.25V14.4165H2.75"
+                            fill="black" />
                     </svg>
-                </button>
+                    Créditos
+                </x-nav-link>
+
+                <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_2179_224)">
+                            <path
+                                d="M20.7203 13.5464C20.7235 13.5091 20.7179 13.4716 20.704 13.4369C20.6901 13.4022 20.6683 13.3712 20.6403 13.3464L20.0003 12.6664C19.9585 12.6397 19.9099 12.6255 19.8603 12.6255C19.8107 12.6255 19.7621 12.6397 19.7203 12.6664C18.8657 13.026 17.9475 13.2096 17.0203 13.2064C16.2794 13.2093 15.5431 13.091 14.8403 12.8564C14.7805 12.8363 14.7153 12.8396 14.6578 12.8656C14.6004 12.8915 14.5548 12.9383 14.5303 12.9964C14.2697 13.5842 13.9335 14.1355 13.5303 14.6364C13.5155 14.6712 13.5078 14.7086 13.5078 14.7464C13.5078 14.7842 13.5155 14.8216 13.5303 14.8564C13.5983 15.1015 13.6818 15.3419 13.7803 15.5764C13.8079 15.6366 13.8583 15.6833 13.9203 15.7064C16.3603 16.6064 19.5303 18.0964 19.5303 22.7064V24.2064C19.5344 24.2797 19.5344 24.3531 19.5303 24.4264C19.5253 24.4621 19.5281 24.4984 19.5384 24.533C19.5488 24.5675 19.5665 24.5994 19.5903 24.6264C19.6406 24.6771 19.7089 24.7059 19.7803 24.7064H23.5003C23.6329 24.7064 23.7601 24.6537 23.8539 24.56C23.9476 24.4662 24.0003 24.339 24.0003 24.2064V23.3564C24.0003 20.2564 21.8403 19.4864 19.9303 18.8064L19.4403 18.6264C19.3783 18.6033 19.3279 18.5566 19.3003 18.4964C19.27 18.4324 19.2465 18.3654 19.2303 18.2964C19.1409 17.8879 19.1409 17.4649 19.2303 17.0564C20.1327 16.1035 20.6616 14.8574 20.7203 13.5464Z"
+                                fill="black" />
+                            <path
+                                d="M10 6.16658C10 5.4683 10.1045 4.77395 10.31 4.10658C10.3356 4.04238 10.3356 3.97079 10.31 3.90658C10.2695 3.84758 10.2092 3.80502 10.14 3.78658C9.76558 3.70469 9.38326 3.66445 9 3.66658C6.63 3.66658 4.25 5.22658 4.25 8.66658C4.25 12.8266 5.94 13.8266 6.14 14.2466C6.34053 14.8647 6.36134 15.5271 6.2 16.1566C6.13 16.4166 6.03 16.5266 5.96 16.5566L5.2 16.8266C2.76 17.7266 0 18.6666 0 22.6666V24.1666C0 24.2992 0.0526784 24.4264 0.146447 24.5201C0.240215 24.6139 0.367392 24.6666 0.5 24.6666H17.5C17.6326 24.6666 17.7598 24.6139 17.8536 24.5201C17.9473 24.4264 18 24.2992 18 24.1666V22.6666C18 18.7166 15.23 17.7366 12.78 16.8566L12 16.5966C11.93 16.5966 11.83 16.4566 11.76 16.1966C11.5855 15.5719 11.5855 14.9113 11.76 14.2866C12.3153 13.7015 12.7652 13.0249 13.09 12.2866C13.1104 12.2321 13.1126 12.1725 13.0964 12.1167C13.0802 12.0608 13.0464 12.0117 13 11.9766C12.0648 11.3255 11.3027 10.4559 10.7799 9.4434C10.2571 8.43089 9.98938 7.30606 10 6.16658Z"
+                                fill="black" />
+                            <path
+                                d="M20.0009 10.8066C20.0457 10.7733 20.1001 10.7553 20.1559 10.7553C20.2117 10.7553 20.2661 10.7733 20.3109 10.8066L22.3109 12.8066C22.4039 12.9003 22.5145 12.9747 22.6363 13.0255C22.7582 13.0762 22.8889 13.1024 23.0209 13.1024C23.1529 13.1024 23.2836 13.0762 23.4055 13.0255C23.5273 12.9747 23.6379 12.9003 23.7309 12.8066C23.8246 12.7136 23.899 12.603 23.9498 12.4812C24.0006 12.3593 24.0267 12.2286 24.0267 12.0966C24.0267 11.9646 24.0006 11.8339 23.9498 11.712C23.899 11.5901 23.8246 11.4795 23.7309 11.3866L21.7309 9.38658C21.6976 9.34176 21.6796 9.28741 21.6796 9.23158C21.6796 9.17575 21.6976 9.1214 21.7309 9.07658C22.4504 7.93179 22.723 6.56208 22.4966 5.22906C22.2702 3.89603 21.5607 2.6931 20.5036 1.85002C19.4466 1.00693 18.116 0.582775 16.766 0.658552C15.416 0.73433 14.1412 1.30473 13.1851 2.26082C12.2291 3.21691 11.6586 4.49168 11.5829 5.84167C11.5071 7.19165 11.9312 8.52225 12.7743 9.57933C13.6174 10.6364 14.8203 11.3459 16.1534 11.5723C17.4864 11.7987 18.8561 11.5261 20.0009 10.8066ZM13.5009 6.16658C13.5009 5.47435 13.7062 4.79766 14.0908 4.22208C14.4753 3.64651 15.022 3.19791 15.6615 2.933C16.301 2.66809 17.0048 2.59878 17.6837 2.73383C18.3626 2.86888 18.9863 3.20222 19.4758 3.69171C19.9653 4.18119 20.2986 4.80483 20.4336 5.48376C20.5687 6.1627 20.4994 6.86643 20.2345 7.50597C19.9696 8.14551 19.521 8.69214 18.9454 9.07672C18.3698 9.46131 17.6931 9.66658 17.0009 9.66658C16.0726 9.66658 15.1824 9.29783 14.526 8.64145C13.8696 7.98508 13.5009 7.09484 13.5009 6.16658Z"
+                                fill="black" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_2179_224">
+                                <rect width="24" height="24" fill="white" transform="translate(0 0.666504)" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    Empleados
+                </x-nav-link>
+
+                <x-nav-link :href="route('customers')" :active="request()->routeIs('customers')">
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 10.6665C14.2091 10.6665 16 8.87564 16 6.6665C16 4.45736 14.2091 2.6665 12 2.6665C9.79086 2.6665 8 4.45736 8 6.6665C8 8.87564 9.79086 10.6665 12 10.6665Z"
+                            fill="black" />
+                        <path
+                            d="M20 18.1665C20 20.6515 20 22.6665 12 22.6665C4 22.6665 4 20.6515 4 18.1665C4 15.6815 7.582 13.6665 12 13.6665C16.418 13.6665 20 15.6815 20 18.1665Z"
+                            fill="black" />
+                    </svg>
+                    Clientes
+                </x-nav-link>
+
+                <x-nav-link :href="route('reports')" :active="request()->routeIs('reports')">
+                    <svg width="22" height="23" viewBox="0 0 22 23" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15.0661 0.666504H6.94608C6.62812 0.666504 6.31017 0.800948 6.09004 1.02095L0.354641 6.75317C0.134519 6.97317 0 7.29095 0 7.60873V15.7121C0 16.0421 0.134519 16.3476 0.354641 16.5798L6.07782 22.2998C6.31017 22.5321 6.62812 22.6665 6.94608 22.6665H15.0539C15.3841 22.6665 15.6898 22.5321 15.9222 22.3121L21.6453 16.5921C21.7587 16.4779 21.8483 16.3424 21.9092 16.1935C21.9701 16.0446 22.0009 15.8851 22 15.7243V7.60873C22 7.27873 21.8655 6.97317 21.6453 6.74095L15.9222 1.02095C15.702 0.800948 15.3841 0.666504 15.0661 0.666504ZM11.0061 18.1443C10.1256 18.1443 9.41633 17.4354 9.41633 16.5554C9.41633 15.6754 10.1256 14.9665 11.0061 14.9665C11.8866 14.9665 12.5959 15.6754 12.5959 16.5554C12.5959 17.4354 11.8866 18.1443 11.0061 18.1443ZM11.0061 12.8887C10.3335 12.8887 9.7832 12.3387 9.7832 11.6665V6.77762C9.7832 6.10539 10.3335 5.55539 11.0061 5.55539C11.6787 5.55539 12.229 6.10539 12.229 6.77762V11.6665C12.229 12.3387 11.6787 12.8887 11.0061 12.8887Z"
+                            fill="black" />
+                    </svg>
+                    Reportes
+                </x-nav-link>
             </div>
+        </div>
+
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <x-danger-button class="w-full">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M3.85525 11.2684C3.65153 11.4381 3.38878 11.5199 3.12475 11.4959C2.86072 11.4719 2.61703 11.344 2.44725 11.1404L0.364247 8.6404C0.201982 8.4359 0.126123 8.17604 0.152877 7.91636C0.179631 7.65667 0.306874 7.41775 0.507426 7.25062C0.707978 7.08349 0.965937 7.00142 1.22619 7.02193C1.48644 7.04245 1.72835 7.16392 1.90025 7.3604L3.98325 9.8604C4.15291 10.0641 4.23474 10.3269 4.21073 10.5909C4.18673 10.8549 4.05887 11.0986 3.85525 11.2684Z"
+                        fill="white" />
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M3.85661 4.73212C4.06038 4.90176 4.18843 5.14538 4.21262 5.40941C4.23681 5.67344 4.15516 5.93627 3.98561 6.14012L1.90161 8.64012C1.81873 8.74457 1.7158 8.8314 1.59887 8.89548C1.48193 8.95957 1.35337 8.99962 1.22073 9.01329C1.08809 9.02695 0.954052 9.01395 0.826511 8.97505C0.69897 8.93615 0.580497 8.87214 0.478061 8.78678C0.375625 8.70141 0.291295 8.59642 0.230033 8.47799C0.168772 8.35955 0.131815 8.23006 0.121337 8.09713C0.11086 7.9642 0.127073 7.83052 0.169023 7.70395C0.210973 7.57738 0.277813 7.46047 0.36561 7.36012L2.44861 4.86012C2.61839 4.6565 2.86208 4.52863 3.12611 4.50463C3.39014 4.48063 3.65289 4.56245 3.85661 4.73212Z"
+                        fill="white" />
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M1.38281 8C1.38281 7.73478 1.48817 7.48043 1.67571 7.29289C1.86324 7.10536 2.1176 7 2.38281 7L8.88281 7C9.14803 7 9.40238 7.10536 9.58992 7.29289C9.77746 7.48043 9.88281 7.73478 9.88281 8C9.88281 8.26522 9.77746 8.51957 9.58992 8.70711C9.40238 8.89464 9.14803 9 8.88281 9L2.38281 9C2.1176 9 1.86324 8.89464 1.67571 8.70711C1.48817 8.51957 1.38281 8.26522 1.38281 8ZM15.8828 15C15.8828 15.2652 15.7775 15.5196 15.5899 15.7071C15.4024 15.8946 15.148 16 14.8828 16L5.88281 16C5.6176 16 5.36324 15.8946 5.17571 15.7071C4.98817 15.5196 4.88281 15.2652 4.88281 15C4.88281 14.7348 4.98817 14.4804 5.17571 14.2929C5.36324 14.1054 5.6176 14 5.88281 14L14.8828 14C15.148 14 15.4024 14.1054 15.5899 14.2929C15.7775 14.4804 15.8828 14.7348 15.8828 15ZM15.8828 1C15.8828 1.26522 15.7775 1.51957 15.5899 1.70711C15.4024 1.89464 15.148 2 14.8828 2L5.88281 2C5.6176 2 5.36324 1.89464 5.17571 1.70711C4.98817 1.51957 4.88281 1.26522 4.88281 0.999999C4.88281 0.734782 4.98817 0.480428 5.17571 0.292892C5.36324 0.105355 5.6176 -8.97414e-07 5.88281 -8.74228e-07L14.8828 -8.74228e-08C15.148 -6.42368e-08 15.4024 0.105356 15.5899 0.292892C15.7775 0.480429 15.8828 0.734783 15.8828 1Z"
+                        fill="white" />
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M5.88281 16C5.6176 16 5.36324 15.8946 5.17571 15.7071C4.98817 15.5196 4.88281 15.2652 4.88281 15L4.88281 11C4.88281 10.7348 4.98817 10.4804 5.17571 10.2929C5.36324 10.1054 5.6176 10 5.88281 10C6.14803 10 6.40238 10.1054 6.58992 10.2929C6.77746 10.4804 6.88281 10.7348 6.88281 11L6.88281 15C6.88281 15.2652 6.77746 15.5196 6.58992 15.7071C6.40238 15.8946 6.14803 16 5.88281 16ZM5.88281 6C5.6176 6 5.36324 5.89464 5.17571 5.70711C4.98817 5.51957 4.88281 5.26522 4.88281 5L4.88281 0.999999C4.88281 0.734782 4.98817 0.480428 5.17571 0.292892C5.36324 0.105355 5.6176 -8.97414e-07 5.88281 -8.74228e-07C6.14803 -8.51042e-07 6.40238 0.105355 6.58992 0.292892C6.77746 0.480428 6.88281 0.734782 6.88281 0.999999L6.88281 5C6.88281 5.26522 6.77746 5.51957 6.58992 5.70711C6.40238 5.89464 6.14803 6 5.88281 6ZM14.8828 16C14.6176 16 14.3632 15.8946 14.1757 15.7071C13.9882 15.5196 13.8828 15.2652 13.8828 15L13.8828 1C13.8828 0.734783 13.9882 0.480429 14.1757 0.292892C14.3632 0.105356 14.6176 -1.10609e-07 14.8828 -8.74228e-08C15.148 -6.42368e-08 15.4024 0.105356 15.5899 0.292892C15.7775 0.480429 15.8828 0.734783 15.8828 1L15.8828 15C15.8828 15.2652 15.7775 15.5196 15.5899 15.7071C15.4024 15.8946 15.148 16 14.8828 16Z"
+                        fill="white" />
+                </svg>
+
+                Cerrar Sesión
+            </x-danger-button>
+        </form>
+
+
+        <!-- Settings Dropdown -->
+        {{-- <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <x-dropdown align="left" width="48">
+                <x-slot name="trigger">
+                    <button
+                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <div>{{ Auth::user()->name }}</div>
+
+                        <div class="ms-1">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </button>
+                </x-slot>
+
+                <x-slot name="content">
+                    <x-dropdown-link :href="route('profile.edit')">
+                        {{ __('Profile') }}
+                    </x-dropdown-link>
+
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <x-dropdown-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-dropdown-link>
+                    </form>
+                </x-slot>
+            </x-dropdown>
+        </div> --}}
+
+        <!-- Hamburger -->
+        <div class="-me-2 flex items-center sm:hidden">
+            <button @click="open = ! open"
+                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                    <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
         </div>
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+    {{-- <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
@@ -89,12 +168,12 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                        onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 </nav>
