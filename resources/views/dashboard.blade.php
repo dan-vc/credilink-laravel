@@ -122,37 +122,64 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="bg-white border-b border-gray-200">
-                        <td class="px-3 py-4">
-                            C-0001
-                        </td>
-                        <td class="px-3 py-4">
-                            Jane Cooper
-                        </td>
-                        <td class="px-3 py-4">
-                            12 meses
-                        </td>
-                        <td class="px-3 py-4">
-                            10%
-                        </td>
-                        <td class="px-3 py-4">
-                            S/. 3000.00
-                        </td>
-                        <td class="px-3 py-4">
-                            Junior Ynga
-                        </td>
-                        <td class="px-3 py-4">
-                            16/05/25
-                        </td>
-                        <td class="px-3 py-4">
-                            10/10/25
-                        </td>
-                        <td class="px-3 py-4">
-                            <span class="bg-green-100 border border-green-700 text-green-800 px-3 py-1 rounded-md">
-                                Aprobado
-                            </span>
-                        </td>
-                    </tr>
+                    @foreach ($credits as $credit)
+                        <tr class="bg-white border-b border-gray-200">
+                            <td class="px-3 py-4">
+                                {{ $credit->id }}
+                            </td>
+                            <td class="px-3 py-4">
+                                {{ $credit->client->name }}
+                            </td>
+                            <td class="px-3 py-4">
+                                {{ $credit->term_months }}
+                            </td>
+                            <td class="px-3 py-4">
+                                {{ number_format($credit->interest_rate, 2) }}%
+                            </td>
+                            <td class="px-3 py-4">
+                                S/. {{ $credit->amount }}
+                            </td>
+                            <td class="px-3 py-4">
+                                {{ $credit->approver->name }}
+                            </td>
+                            <td class="px-3 py-4">
+                                {{ $credit->start_date }}
+                            </td>
+                            <td class="px-3 py-4">
+                                {{ $credit->end_date }}
+                            </td>
+                            <td class="px-3 py-4">
+                                @switch($credit->status)
+                                    @case('approved')
+                                        <span class="bg-green-100 border border-green-700 text-green-800 px-3 py-1 rounded-md">
+                                            Aprobado
+                                        </span>
+                                    @break
+
+                                    @case('pending')
+                                        <span
+                                            class="bg-yellow-100 border border-yellow-700 text-yellow-800 px-3 py-1 rounded-md">
+                                            Pendiente
+                                        </span>
+                                    @break
+
+                                    @case('paid')
+                                        <span class="bg-blue-100 border border-blue-700 text-blue-800 px-3 py-1 rounded-md">
+                                            Pagado
+                                        </span>
+                                    @break
+
+                                    @case('rejected')
+                                        <span class="bg-red-100 border border-red-700 text-red-800 px-3 py-1 rounded-md">
+                                            Rechazado
+                                        </span>
+                                    @break
+
+                                    @default
+                                @endswitch
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
