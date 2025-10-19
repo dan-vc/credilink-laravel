@@ -1,4 +1,4 @@
-<nav class="flex md:hidden">
+<nav class="flex md:hidden fixed bottom-0 left-0 w-full">
     <!-- Mobile Navigation Menu -->
     <div class="bg-primary w-full text-white flex p-4 sm:p-5 justify-between">
 

@@ -1,6 +1,6 @@
 <nav x-data="{ open: false }" class="bg-primary w-full max-w-72 hidden md:flex">
     <!-- Primary Navigation Menu -->
-    <div class="p-4 sm:p-5 flex flex-col justify-between h-full">
+    <div class="p-4 sm:p-5 flex flex-col justify-between h-screen sticky top-0">
         <div class="flex flex-col">
             <!-- Logo -->
             <div class="shrink-0 flex items-center">
