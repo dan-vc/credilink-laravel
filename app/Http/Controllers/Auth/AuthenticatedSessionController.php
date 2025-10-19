@@ -66,7 +66,7 @@ class AuthenticatedSessionController extends Controller
             Auth::login($user, true);
             return redirect('/dashboard');
         } catch (\Exception $e) {
-            return redirect('/login')->withErrors(['google_error' => 'Error iniciando sesión con Google']);
+            return redirect('/login')->withErrors(['social_errors' => 'Error iniciando sesión con Google $e']);
         }
     }
 
@@ -81,6 +81,7 @@ class AuthenticatedSessionController extends Controller
         try {
             $githubUser = Socialite::driver('github')->user();
 
+            
             $user = User::updateOrCreate( 
                 ['email' => $githubUser->getEmail()],
                 [
@@ -88,13 +89,13 @@ class AuthenticatedSessionController extends Controller
                     'password' => bcrypt(Str::random(16)),
                     'github_id' => $githubUser->getId(),
                     'avatar' => $githubUser->getAvatar(),
-                ]
-            );
+                    ]
+                );
 
             Auth::login($user, true);
             return redirect('/dashboard');
         } catch (\Exception $e) {
-            return redirect('/login')->withErrors(['github_error' => 'Error iniciando sesión con GitHub']);
+            return redirect('/login')->withErrors(['social_errors' => 'Error iniciando sesión con GitHub']);
         }
     }
 }

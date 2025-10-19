@@ -46,8 +46,8 @@
                         <!-- Email -->
                         <div>
                             <label for="email">Correo</label><br>
-                            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
-                                autocomplete="username">
+                            <input id="email" type="email" name="email" value="{{ old('email') }}" required
+                                autofocus autocomplete="username">
                             @error('email')
                                 <div style="color: red;">{{ $message }}</div>
                             @enderror
@@ -83,6 +83,9 @@
                                 </button>
                             </div>
                         </div>
+                        @error('social_errors')
+                            <div style="color: red; margin-top: .5rem;">{{ $message }}</div>
+                        @enderror
                     </form>
                 </div>
             </div>
