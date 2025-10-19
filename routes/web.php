@@ -27,6 +27,10 @@ Route::middleware('auth')->group(function () {
     
     Route::get('users', [UserController::class, 'index'])->name('users');
     Route::get('roles', [RoleController::class, 'index'])->name('roles');
+    Route::post('roles', [RoleController::class, 'store']);
+    Route::put('roles', [RoleController::class, 'update']);
+    Route::delete('roles', [RoleController::class, 'destroy']);
+
     Route::get('clients', [ClientController::class, 'index'])->name('clients');
     Route::get('reports', [ReportController::class, 'index'])->name('reports');
 });
