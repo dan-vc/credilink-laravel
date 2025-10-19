@@ -19,6 +19,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('dashboard', [CreditController::class, 'index'])->name('dashboard');
+    Route::post('dashboard', [CreditController::class, 'store'])->name('dashboard.store');
+    
     Route::get('users', function () { return view('users'); })->name('users');
     Route::get('customers', function () { return view('customers'); })->name('customers');
     Route::get('reports', function () { return view('reports'); })->name('reports');
