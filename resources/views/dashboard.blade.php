@@ -202,12 +202,6 @@
         </div>
     </div>
 
-    @if (session('success'))
-        <x-alert type="success">
-            {{ session('success') }}
-        </x-alert>
-    @endif
-
     <script>
         function filterItems() {
             const searchTerm = (document.getElementById('search-input')?.value || '').trim().toLowerCase();

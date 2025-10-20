@@ -26,6 +26,11 @@ Route::middleware('auth')->group(function () {
     Route::post('dashboard', [CreditController::class, 'store'])->name('dashboard.store');
     
     Route::get('users', [UserController::class, 'index'])->name('users');
+    Route::post('users', [UserController::class, 'store']);
+    Route::put('users', [UserController::class, 'update']);
+    Route::delete('users', [UserController::class, 'destroy']);
+
+
     Route::get('roles', [RoleController::class, 'index'])->name('roles');
     Route::post('roles', [RoleController::class, 'store']);
     Route::put('roles', [RoleController::class, 'update']);

@@ -30,7 +30,7 @@
                 <!-- Correo Electrónico -->
                 <div class="mb-4">
                     <x-input-label for="email" value="Correo Electrónico" class="mb-1" />
-                    <x-text-input id="email" class="block w-full" type="email" email="email" required
+                    <x-text-input id="email" class="block w-full" type="email" name="email" required
                         autocomplete="email" placeholder="carlosrv@gmail.com" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
@@ -196,9 +196,11 @@
                 <!-- Contraseña -->
                 <div class="mb-4">
                     <x-input-label for="password" value="Contraseña" class="mb-1" />
-                    <x-text-input id="password" class="block w-full" type="password" name="password" required
-                        autocomplete="password" placeholder="**********" x-bind:value="selected?.password" />
-
+                    <x-text-input id="password" class="block w-full" type="password" name="password"
+                        autocomplete="password" placeholder="**********" />
+                    <p class="text-xs text-gray-500 mt-1">
+                        Deja este campo vacío si no deseas cambiar la contraseña.
+                    </p>
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
 
@@ -206,7 +208,7 @@
                 <div class="mb-4">
                     <x-input-label for="status" value="Estado" class="mb-1" />
                     <x-select-input id="status" class="block w-full" name="status" required
-                        autocomplete="status" x-bind:value="selected?.status" >
+                        autocomplete="status" x-bind:value="selected?.status">
                         <option value="">Seleccione un estado</option>
                         <option value="active">Activado</option>
                         <option value="inactive">Desactivado</option>
@@ -218,7 +220,7 @@
                 <div class="mb-4">
                     <x-input-label for="role_id" value="Rol" class="mb-1" />
                     <x-select-input id="role_id" class="block w-full" name="role_id" required
-                        autocomplete="role_id" x-bind:value="selected?.role.id" >
+                        autocomplete="role_id" x-bind:value="selected?.role.id">
                         <option value="">Seleccione un rol</option>
                         @foreach ($roles as $role)
                             <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -228,7 +230,7 @@
                 </div>
 
                 <x-primary-button class="w-full">
-                    Actualizar Usuario
+                    Actualizar Empleado
                 </x-primary-button>
             </form>
         </x-modal>
@@ -239,7 +241,7 @@
                 @method('DELETE')
 
                 <h2 class="text-xl font-semibold mb-2">
-                    ¿Estás seguro de que deseas eliminar el usuario <span class="font-bold italic"
+                    ¿Estás seguro de que deseas eliminar el empleado <span class="font-bold italic"
                         x-text="selected?.name"></span>?
                 </h2>
 
@@ -250,7 +252,7 @@
                 <x-text-input type="hidden" name="id" required x-bind:value="selected?.id" />
 
                 <x-danger-button class="w-full">
-                    Eliminar Usuario
+                    Eliminar Empleado
                 </x-danger-button>
             </form>
         </x-modal>
