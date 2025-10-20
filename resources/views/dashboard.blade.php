@@ -8,7 +8,7 @@
 
 
         <x-modal name="create-new-credit" focusable maxWidth="4xl" :bg="false">
-            <div x-data="{products: @js($products), selected: null}" class="flex flex-col items-center gap-5 sm:flex-row">
+            <div x-data="{ products: @js($products), selected: null }" class="flex flex-col items-center gap-5 sm:flex-row">
                 <form method="post" action="" class="p-6 bg-white rounded-xl shadow-xl w-full" x-transition>
                     @csrf
                     <h2 class="text-xl font-semibold mb-4">
@@ -32,7 +32,8 @@
                     <div class="mb-4">
                         <x-input-label for="product_id" value="Producto Financiero" class="mb-1" />
                         <x-select-input id="product_id" class="block w-full" name="product_id" required
-                            autocomplete="product_id" x-on:change="
+                            autocomplete="product_id"
+                            x-on:change="
                             selected = products.find(p => p.id == $event.target.value) || null">
                             <option value="">Seleccione un producto financiero</option>
                             @foreach ($products as $product)
@@ -61,15 +62,15 @@
                         <!-- Fecha Inicial -->
                         <div>
                             <x-input-label for="start_date" value="Fecha Inicial" class="mb-1" />
-                            <x-text-input id="start_date" class="block w-full" type="date" name="start_date"
-                                required autocomplete="start_date" />
+                            <x-text-input id="start_date" class="block w-full" type="date" name="start_date" required
+                                autocomplete="start_date" />
                             <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
                         </div>
                         <!-- Fecha Final -->
                         <div>
                             <x-input-label for="end_date" value="Fecha Final" class="mb-1" />
-                            <x-text-input id="end_date" class="block w-full" type="date" name="end_date"
-                                required autocomplete="end_date" />
+                            <x-text-input id="end_date" class="block w-full" type="date" name="end_date" required
+                                autocomplete="end_date" />
                             <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
                         </div>
                     </div>
@@ -89,13 +90,15 @@
                         <!-- Tasa de Interés -->
                         <div class="mb-4">
                             <x-input-label value="Tasa de Interés" class="mb-1" />
-                            <x-text-input class="block w-full" type="text" value="12.5" disabled x-bind:value="selected ? selected.interest_rate + '%' : '0%'" />
+                            <x-text-input class="block w-full" type="text" value="12.5" disabled
+                                x-bind:value="selected ? selected.interest_rate + '%' : '0%'" />
                         </div>
 
                         <!-- Pazlo Máximo -->
                         <div class="mb-4">
                             <x-input-label value="Plazo máximo" class="mb-1" />
-                            <x-text-input class="block w-full" type="text" value="12 meses" disabled x-bind:value="selected ? selected.max_term_months + ' meses' : 0"/>
+                            <x-text-input class="block w-full" type="text" value="12 meses" disabled
+                                x-bind:value="selected ? selected.max_term_months + ' meses' : 0" />
                         </div>
                     </div>
 
@@ -103,8 +106,10 @@
                     <div class="mb-4">
                         <x-input-label value="Cantidad min - max (S/.)" class="mb-1" />
                         <div class="grid grid-cols-2 gap-2 mb-4">
-                            <x-text-input class="block w-full" type="number" value="10000" disabled x-bind:value="selected ? selected.min_amount : 0" />
-                            <x-text-input class="block w-full" type="number" value="40000" disabled x-bind:value="selected ? selected.max_amount : 0" />
+                            <x-text-input class="block w-full" type="number" value="10000" disabled
+                                x-bind:value="selected ? selected.min_amount : 0" />
+                            <x-text-input class="block w-full" type="number" value="40000" disabled
+                                x-bind:value="selected ? selected.max_amount : 0" />
                         </div>
                     </div>
                 </div>
@@ -196,6 +201,12 @@
             </table>
         </div>
     </div>
+
+    @if (session('success'))
+        <x-alert type="success">
+            {{ session('success') }}
+        </x-alert>
+    @endif
 
     <script>
         function filterItems() {
