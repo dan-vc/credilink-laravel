@@ -19,12 +19,30 @@
 </head>
 
 <body class="font-sans antialiased">
+
+    @if ($errors->any())
+        <x-alert type="danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </x-alert>
+    @endif
+
+
+    @if (session('success'))
+        <x-alert type="success">
+            {{ session('success') }}
+        </x-alert>
+    @endif
+
     <div class="min-h-screen layout-wrapper">
         @include('layouts.navigation')
 
 
         <!-- Page Content -->
-        <main class="w-full md:p-8 p-4 bg-gray-100 max-w[1920px]">
+        <main class="w-full p-4 bg-gray-100 max-w[1920px] pb-28 md:pb-8 md:p-8">
             {{ $slot }}
         </main>
 

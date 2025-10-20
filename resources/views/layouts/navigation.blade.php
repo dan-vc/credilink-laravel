@@ -1,6 +1,6 @@
 <nav x-data="{ open: false }" class="bg-primary w-full max-w-72 hidden md:flex">
     <!-- Primary Navigation Menu -->
-    <div class="p-4 sm:p-5 flex flex-col justify-between h-full">
+    <div class="p-4 sm:p-5 flex flex-col justify-between h-screen sticky top-0">
         <div class="flex flex-col">
             <!-- Logo -->
             <div class="shrink-0 flex items-center">
@@ -43,7 +43,7 @@
                     Empleados
                 </x-nav-link>
 
-                <x-nav-link :href="route('customers')" :active="request()->routeIs('customers')">
+                <x-nav-link :href="route('clients')" :active="request()->routeIs('clients')">
                     <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
