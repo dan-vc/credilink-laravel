@@ -35,8 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::post('roles', [RoleController::class, 'store']);
     Route::put('roles', [RoleController::class, 'update']);
     Route::delete('roles', [RoleController::class, 'destroy']);
-
+    
     Route::get('clients', [ClientController::class, 'index'])->name('clients');
+    Route::post('clients', [ClientController::class, 'store']);
+    Route::put('clients', [ClientController::class, 'update']);
+    Route::delete('clients', [ClientController::class, 'destroy']);
+    
     Route::get('reports', [ReportController::class, 'index'])->name('reports');
 });
 
