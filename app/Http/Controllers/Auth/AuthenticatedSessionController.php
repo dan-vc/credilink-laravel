@@ -60,6 +60,7 @@ class AuthenticatedSessionController extends Controller
                 [
                     'name' => $googleUser->getName(),
                     'password' => bcrypt(Str::random(16)),
+                    'role_id' => 2,
                 ]
             );
 
@@ -87,6 +88,7 @@ class AuthenticatedSessionController extends Controller
                 [
                     'name' => $githubUser->getName() ?? $githubUser->getNickname(),
                     'password' => bcrypt(Str::random(16)),
+                    'role_id' => 2,
                     'github_id' => $githubUser->getId(),
                     'avatar' => $githubUser->getAvatar(),
                     ]
