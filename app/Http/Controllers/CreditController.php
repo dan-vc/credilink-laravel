@@ -14,7 +14,7 @@ class CreditController extends Controller
 {
     public function index()
     {
-        // DB::enableQueryLog(); // 🔍 Activa el registro de consultas
+        // DB::enableQueryLog(); // 🔍 Activa el registro de consultass
 
         // $credits = Credit::all();   
 
@@ -23,11 +23,11 @@ class CreditController extends Controller
         //     $credit->approver->name; // esto provoca N consultas extra
         // }
         
-        // dd(DB::getQueryLog()); // 🧾 Muestra todas las consultas ejecutadas
-
+        
         $clients = Client::all();
         $products = FinancialProduct::all();
-        $credits = Credit::with(['client', 'approver'])->get(); // Eager loading para evitar N+1
+        $credits = Credit::with(['client', 'approver'])->paginate(10); // Eager loading para evitar N+1
+        // dd(DB::getQueryLog()); // 🧾 Muestra todas las consultas ejecutadas
 
         return view('dashboard', compact('credits', 'clients', 'products'));
     }

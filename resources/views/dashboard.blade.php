@@ -122,7 +122,7 @@
             Créditos
         </h2>
 
-        <div class="relative overflow-x-auto flex">
+        <div class="relative overflow-x-auto flex mb-5">
             <table class="w-full min-w-max text-sm text-left text-gray-800 font-medium">
                 <thead class="text-gray-400 fontP-medium border-b border-gray-200">
                     <tr>
@@ -161,7 +161,7 @@
                                 @if ($credit->approver)
                                     {{ $credit->approver->name }}
                                 @else
-                                    <span class="italic text-gray-600">Empleado eliminado</span>
+                                    <span class="italic text-gray-400">Empleado eliminado</span>
                                 @endif
                             </td>
                             <td class="px-3 py-4">
@@ -205,6 +205,8 @@
                 </tbody>
             </table>
         </div>
+
+        {{ $credits->links() }}
     </div>
 
     <script>
