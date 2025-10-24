@@ -140,7 +140,8 @@
                 <tbody>
                     @foreach ($credits as $credit)
                         <tr class="bg-white border-b border-gray-200 filter-item"
-                            data-client="{{ $credit->client->name }}" data-approver="{{ $credit->approver->name }}">
+                            data-client="{{ $credit->client->name }}"
+                            data-approver="{{ $credit->approver->name ?? '' }}">
                             <td class="px-3 py-4">
                                 {{ $credit->id }}
                             </td>
@@ -157,7 +158,11 @@
                                 S/. {{ $credit->amount }}
                             </td>
                             <td class="px-3 py-4">
-                                {{ $credit->approver->name }}
+                                @if ($credit->approver)
+                                    {{ $credit->approver->name }}
+                                @else
+                                    <span class="italic text-gray-600">Empleado eliminado</span>
+                                @endif
                             </td>
                             <td class="px-3 py-4">
                                 {{ $credit->start_date }}
