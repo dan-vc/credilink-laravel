@@ -166,6 +166,8 @@
             </table>
         </div>
 
+        {{ $users->links() }}
+
         <x-modal name="edit-user" focusable>
             <form method="post" action="" class="p-6">
                 @csrf

@@ -122,7 +122,7 @@
             Créditos
         </h2>
 
-        <div class="relative overflow-x-auto flex mb-5">
+        <div class="relative overflow-x-auto flex">
             <table class="w-full min-w-max text-sm text-left text-gray-800 font-medium">
                 <thead class="text-gray-400 fontP-medium border-b border-gray-200">
                     <tr>

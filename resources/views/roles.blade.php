@@ -69,6 +69,8 @@
                     </tbody>
                 </table>
             </div>
+
+            {{ $roles->links() }}
         </div>
 
         <form method="post" action=""

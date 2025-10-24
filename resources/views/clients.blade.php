@@ -176,6 +176,8 @@
             </table>
         </div>
 
+        {{ $clients->links() }}
+
         <x-modal name="edit-client" focusable>
             <form method="post" action="" class="p-6">
                 @csrf
