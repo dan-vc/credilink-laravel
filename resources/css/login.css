@@ -31,13 +31,13 @@ body {
 }
 
 .block-2 {
-    gap: 30px;
+    gap: 20px;
     display: flex;
     flex-direction: column;
     width: 100%;
     max-width: 1320px;
     margin: 0 auto;
-    padding: 60px 120px;
+    padding: 32px 120px;
     border-radius: 10px;
     justify-content: center;
     align-items: center;
@@ -45,7 +45,6 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 100vh;
 }
 
 .card {
@@ -238,7 +237,7 @@ button img {
 
 .line {
     width: 1080px;
-    height: 20px;
+    height: 15px;
     background-color: white;
     border-radius: 20px;
 }

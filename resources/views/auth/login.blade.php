@@ -10,11 +10,11 @@
 </head>
 
 <body>
-    <div class="block-1">
+    <header class="block-1">
         <img src="{{ asset('img/login/logo.webp') }}" alt="Logo">
-    </div>
+    </header>
 
-    <div class="block-2">
+    <section class="block-2">
         <div class="card">
             <div>
                 <img src="{{ asset('img/login/creditos.webp') }}" alt="creditos">
@@ -98,11 +98,7 @@
         <div class="line">
 
         </div>
-    </div>
-
-
-
-
+    </section>
 </body>
 
 </html>
