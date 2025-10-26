@@ -61,18 +61,21 @@
 
                     <!-- Fechas -->
                     <div class="grid grid-cols-2 gap-2 mb-4">
+                        @php
+                            $today = now('America/Lima')->format('Y-m-d');
+                        @endphp
                         <!-- Fecha Inicial -->
                         <div>
                             <x-input-label for="start_date" value="Fecha Inicial" class="mb-1" />
                             <x-text-input id="start_date" class="block w-full" type="date" name="start_date" required
-                                autocomplete="start_date" />
+                                autocomplete="start_date" value="{{ $today }}" placeholder="dd/mm/yyyy" />
                             <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
                         </div>
                         <!-- Fecha Final -->
                         <div>
                             <x-input-label for="end_date" value="Fecha Final" class="mb-1" />
                             <x-text-input id="end_date" class="block w-full" type="date" name="end_date" required
-                                autocomplete="end_date" />
+                                autocomplete="end_date" min="{{ $today }}" />
                             <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
                         </div>
                     </div>
@@ -135,7 +138,7 @@
                         <th scope="col" class="p-3 font-medium">Monto Total</th>
                         <th scope="col" class="p-3 font-medium">Prestamista</th>
                         <th scope="col" class="p-3 font-medium">Fecha de Solicitud</th>
-                        <th scope="col" class="p-3 font-medium">Fecha de Aprobación</th>
+                        <th scope="col" class="p-3 font-medium">Fecha de Finalización</th>
                         <th scope="col" class="p-3 font-medium">Estado</th>
                     </tr>
                 </thead>
