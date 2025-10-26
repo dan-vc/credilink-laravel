@@ -1,6 +1,8 @@
 <x-app-layout>
     <div class="bg-white rounded-xl px-4 py-3 mb-3 flex gap-2 justify-between items-stretch">
-        <x-search-input placeholder="Buscar..." id="search-input" />
+        <form action="" method="get" class="contents">
+            <x-search-input placeholder="Buscar..." id="search-input" />
+        </form>
 
         <x-danger-button href="{{ route('users') }}">
             ← Volver
@@ -157,26 +159,4 @@
             </form>
         </x-modal>
     </div>
-
-
-    <script>
-        function filterItems() {
-            const searchTerm = (document.getElementById('search-input')?.value || '').trim().toLowerCase();
-            const items = document.querySelectorAll('.filter-item');
-
-            items.forEach(item => {
-                const client = (item.getAttribute('data-client') || '').toLowerCase();
-                const approver = (item.getAttribute('data-approver') || '').toLowerCase();
-
-                // si searchTerm está vacío => todos los items cumplen
-                const matchesSearch = !searchTerm || client.includes(searchTerm) || approver.includes(searchTerm);
-
-                matchesSearch ? item.style.display = '' : item.style.display = 'none';
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('search-input')?.addEventListener('input', filterItems);
-        });
-    </script>
 </x-app-layout>

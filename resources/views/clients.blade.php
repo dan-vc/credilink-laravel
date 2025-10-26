@@ -1,6 +1,8 @@
 <x-app-layout>
     <div class="bg-white rounded-xl px-4 py-3 mb-3 flex gap-2 justify-between items-stretch">
-        <x-search-input placeholder="Buscar..." id="search-input" />
+        <form action="" method="get" class="contents">
+            <x-search-input placeholder="Buscar..." id="search-input" />
+        </form>
 
         <x-primary-button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-new-user')">
             Añadir Cliente
@@ -217,7 +219,7 @@
                 <div class="mb-4">
                     <x-input-label for="status" value="Estado" class="mb-1" />
                     <x-select-input id="status" class="block w-full" name="status" required
-                        autocomplete="status" x-bind:value="selected?.status" >
+                        autocomplete="status" x-bind:value="selected?.status">
                         <option value="">Seleccione un estado</option>
                         <option value="active">Activado</option>
                         <option value="inactive">Desactivado</option>
@@ -228,7 +230,8 @@
                 <!-- Tipo de Cliente -->
                 <div class="mb-4">
                     <x-input-label for="type" value="Tipo de Cliente" class="mb-1" />
-                    <x-select-input id="type" class="block w-full" name="type" required autocomplete="type" x-bind:value="selected?.type" >
+                    <x-select-input id="type" class="block w-full" name="type" required autocomplete="type"
+                        x-bind:value="selected?.type">
                         <option value="">Seleccione un tipo</option>
                         <option value="empresa">Empresa</option>
                         <option value="cliente">Cliente</option>
@@ -264,25 +267,4 @@
             </form>
         </x-modal>
     </div>
-
-    <script>
-        function filterItems() {
-            const searchTerm = (document.getElementById('search-input')?.value || '').trim().toLowerCase();
-            const items = document.querySelectorAll('.filter-item');
-
-            items.forEach(item => {
-                const client = (item.getAttribute('data-client') || '').toLowerCase();
-                const approver = (item.getAttribute('data-approver') || '').toLowerCase();
-
-                // si searchTerm está vacío => todos los items cumplen
-                const matchesSearch = !searchTerm || client.includes(searchTerm) || approver.includes(searchTerm);
-
-                matchesSearch ? item.style.display = '' : item.style.display = 'none';
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('search-input')?.addEventListener('input', filterItems);
-        });
-    </script>
 </x-app-layout>

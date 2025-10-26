@@ -49,7 +49,7 @@
                     @if ($paginator->onFirstPage())
                         <span aria-disabled="true" aria-label="{{ __('pagination.previous') }}">
                             <span
-                                class="relative inline-flex items-center h-10 w-10 justify-center text-sm font-medium text-gray-500 bg-gray-200 cursor-default rounded-md leading-5"
+                                class="relative inline-flex items-center h-10 w-10 justify-center text-sm font-medium text-gray-500 bg-gray-200 cursor-default rounded-md leading-5 opacity-50"
                                 aria-hidden="true">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
@@ -113,7 +113,7 @@
                     @else
                         <span aria-disabled="true" aria-label="{{ __('pagination.next') }}">
                             <span
-                                class="relative inline-flex items-center h-10 w-10 justify-center text-sm font-medium text-gray-500 bg-gray-200 cursor-default rounded-md leading-5"
+                                class="relative inline-flex items-center h-10 w-10 justify-center text-sm font-medium text-gray-500 bg-gray-200 cursor-default rounded-md leading-5 opacity-50"
                                 aria-hidden="true">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"

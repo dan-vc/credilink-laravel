@@ -42,7 +42,9 @@
         <div class="p-3 sm:p-5 border border-gray-300 rounded-lg mb-5">
             <h3 class="mb-2">Créditos otorgados este mes</h3>
 
-            <canvas id="total-credits"></canvas>
+            <div class="aspect-square sm:aspect-auto sm:h-[460px]">
+                <x-chartjs-component :chart="$chart" />
+            </div>
         </div>
 
         <div class="p-3 sm:p-5 border border-gray-300 rounded-lg">
@@ -76,7 +78,7 @@
                                     {{ $client->credits->count() }}
                                 </td>
                                 <td class="px-3 py-4">
-                                    {{ 'total' }}
+                                    S/. {{ $client->credits->sum('amount') }}
                                 </td>
                                 <td class="px-3 py-4">
                                     @switch($client->status)
@@ -97,7 +99,7 @@
                                     @endswitch
                                 </td>
                                 <td class="px-3 py-4">
-                                    {{ $client->creator->name }}
+                                    <span class="underline">{{ $client->creator->name }}</span>
                                 </td>
                             </tr>
                         @endforeach

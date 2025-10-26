@@ -1,6 +1,8 @@
 <x-app-layout>
     <div class="bg-white rounded-xl px-4 py-3 mb-3 flex gap-2 justify-between items-stretch">
-        <x-search-input placeholder="Buscar por Cliente o Prestamista" id="search-input" />
+        <form action="" method="get" class="contents">
+            <x-search-input placeholder="Buscar por Cliente o Prestamista" id="search-input" />
+        </form>
 
         <x-primary-button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-new-credit')">
             Generar Crédito
@@ -139,9 +141,7 @@
                 </thead>
                 <tbody>
                     @foreach ($credits as $credit)
-                        <tr class="bg-white border-b border-gray-200 filter-item"
-                            data-client="{{ $credit->client->name }}"
-                            data-approver="{{ $credit->approver->name ?? '' }}">
+                        <tr class="bg-white border-b border-gray-200 filter-item">
                             <td class="px-3 py-4">
                                 {{ $credit->id }}
                             </td>
@@ -208,25 +208,4 @@
 
         {{ $credits->links() }}
     </div>
-
-    <script>
-        function filterItems() {
-            const searchTerm = (document.getElementById('search-input')?.value || '').trim().toLowerCase();
-            const items = document.querySelectorAll('.filter-item');
-
-            items.forEach(item => {
-                const client = (item.getAttribute('data-client') || '').toLowerCase();
-                const approver = (item.getAttribute('data-approver') || '').toLowerCase();
-
-                // si searchTerm está vacío => todos los items cumplen
-                const matchesSearch = !searchTerm || client.includes(searchTerm) || approver.includes(searchTerm);
-
-                matchesSearch ? item.style.display = '' : item.style.display = 'none';
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('search-input')?.addEventListener('input', filterItems);
-        });
-    </script>
 </x-app-layout>
