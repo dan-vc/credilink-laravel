@@ -10,7 +10,7 @@
                     Total de créditos activos
                 </h3>
                 <span class="text-4xl font-bold">
-                    250
+                    {{ $totalCredits }}
                 </span>
             </div>
             <div class="p-5 flex flex-col justify-between border border-gray-300 rounded-lg">
@@ -18,7 +18,7 @@
                     Total de clientes
                 </h3>
                 <span class="text-4xl font-bold">
-                    250
+                    {{ $clients->total() }}
                 </span>
             </div>
             <div class="p-5 flex flex-col justify-between border border-gray-300 rounded-lg">
@@ -26,7 +26,7 @@
                     Créditos vencidos
                 </h3>
                 <span class="text-4xl font-bold">
-                    250
+                    {{ $dueCredits }}
                 </span>
             </div>
             <div class="p-5 flex flex-col justify-between border border-gray-300 rounded-lg">
@@ -34,7 +34,7 @@
                     Pagos recibidos este mes
                 </h3>
                 <span class="text-4xl font-bold">
-                    250
+                    {{ $totalPayments }}
                 </span>
             </div>
         </div>

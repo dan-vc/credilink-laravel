@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Credit;
+use App\Models\Payment;
 use Carbon\Carbon;
 use IcehouseVentures\LaravelChartjs\Facades\Chartjs;
 use Illuminate\Support\Facades\DB;
@@ -12,20 +13,30 @@ class ReportController extends Controller
 {
     public function index()
     {
-        $clients = Client::with(['credits', 'creator'])->paginate(10);
+        DB::enableQueryLog();
 
-        // Obtener el mes y año actual
         $now = Carbon::now();
         $year = $now->year;
         $month = $now->month;
 
+
+        $clients = Client::with(['credits', 'creator'])->paginate(5);
+        $totalCredits = Credit::count();
+        $totalPayments = Payment::whereMonth('paid_date', $month)->count();
+
+        $dueCredits = Credit::whereDate('end_date', '<', $now)->count();
+
+        // dd(DB::getQueryLog());
+
+        // Obtener el mes y año actual
+
         // Agrupar los créditos creados este mes por día
         $creditsPerDay = Credit::select(
-            DB::raw('DAY(created_at) as day'),
+            DB::raw('DAY(start_date) as day'),
             DB::raw('COUNT(*) as total')
         )
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->whereYear('start_date', $year)
+            ->whereMonth('start_date', $month)
             ->groupBy('day')
             ->orderBy('day')
             ->get();
@@ -58,6 +69,6 @@ class ReportController extends Controller
                 ],
             ]);
 
-        return view('reports', compact('clients', 'chart'));
+        return view('reports', compact('clients', 'chart', 'totalCredits', 'totalPayments', 'dueCredits'));
     }
 }
