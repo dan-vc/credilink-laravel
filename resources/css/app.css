@@ -15,6 +15,22 @@
   grid-template-columns: auto minmax(0, 1fr);
 }
 
+.gradient-blue {
+  background: linear-gradient(135deg, #003366 0%, #0066CC 100%);
+}
+
+.gradient-yellow {
+  background: linear-gradient(135deg, #664600 0%, #d49100 100%);
+}
+
+.gradient-green {
+  background: linear-gradient(135deg, #003528 0%, #008767 100%);
+}
+
+.gradient-red {
+  background: linear-gradient(135deg, #85241D 0%, #EB4034 100%);
+}
+
 @media screen and (max-width:768px) {
   .layout-wrapper {
     grid-template-columns: minmax(0, 1fr);

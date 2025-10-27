@@ -40,6 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::post('clients', [ClientController::class, 'store']);
     Route::put('clients', [ClientController::class, 'update']);
     Route::delete('clients', [ClientController::class, 'destroy']);
+
+    Route::get('credits/{client}', [CreditController::class, 'showCreditsByClient'])->name('client.credits');
+    Route::get('payments/{credit}', [CreditController::class, 'showPaymentsByCredit'])->name('client.payments');
     
     Route::get('reports', [ReportController::class, 'index'])->name('reports');
 });

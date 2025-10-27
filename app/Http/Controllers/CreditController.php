@@ -28,7 +28,6 @@ class CreditController extends Controller
         $clients = Client::all();
         $products = FinancialProduct::all();
 
-
         $credits = Credit::with(['client', 'approver'])->when($query, function ($q, $query) {
             $q->whereHas('client', function ($subQuery) use ($query) {
                 $subQuery->where('name', 'like', "%$query%");
@@ -69,5 +68,19 @@ class CreditController extends Controller
             dd($th);
         }
 
+    }
+
+    public function showCreditsByClient(Client $client)
+    {
+        $credits = $client->credits()->paginate(10);
+
+        return view('credits', compact('credits', 'client'));
+    }
+
+    public function showPaymentsByCredit(Credit $credit)
+    {
+        $payments = $credit->payments()->paginate(10);
+
+        return view('payments', compact('payments', 'credit'));
     }
 }
