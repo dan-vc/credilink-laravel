@@ -67,9 +67,9 @@
                         <!-- Fecha Inicial -->
                         <div>
                             <x-input-label for="start_date" value="Fecha Inicial" class="mb-1" />
-                            <x-text-input id="start_date" class="block w-full" type="date" name="start_date" required
-                                autocomplete="start_date" value="{{ $today }}" placeholder="dd/mm/yyyy"
-                                disabled />
+                            <x-text-input id="start_date" class="block w-full bg-gray-200" type="date" name="start_date" required
+                                autocomplete="start_date" value="{{ $today }}"
+                                readonly />
                             <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
                         </div>
                         <!-- Fecha Final -->
@@ -297,8 +297,8 @@
                     <!-- Fecha Inicial -->
                     <div>
                         <x-input-label for="start_date" value="Fecha Inicial" class="mb-1" />
-                        <x-text-input id="start_date" class="block w-full" type="date" name="start_date" required
-                            autocomplete="start_date" placeholder="dd/mm/yyyy" disabled
+                        <x-text-input id="start_date" class="block w-full bg-gray-200" type="date" name="start_date" required
+                            autocomplete="start_date" placeholder="dd/mm/yyyy" readonly
                             x-bind:value="selected?.start_date" />
                         <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
                     </div>
