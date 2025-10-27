@@ -28,7 +28,7 @@ class CreditController extends Controller
         $clients = Client::all();
         $products = FinancialProduct::all();
 
-        $credits = Credit::with(['client', 'approver'])->when($query, function ($q, $query) {
+        $credits = Credit::with(['client', 'approver', 'product'])->when($query, function ($q, $query) {
             $q->whereHas('client', function ($subQuery) use ($query) {
                 $subQuery->where('name', 'like', "%$query%");
             })->orwhereHas('approver', function ($subQuery) use ($query) {

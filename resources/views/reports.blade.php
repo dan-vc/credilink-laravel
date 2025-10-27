@@ -78,7 +78,7 @@
                                     {{ $client->credits->count() }}
                                 </td>
                                 <td class="px-3 py-4">
-                                    S/. {{ $client->credits->sum('amount') }}
+                                    S/. {{ number_format($client->credits->sum('amount'), 2, '.', ',') }}
                                 </td>
                                 <td class="px-3 py-4">
                                     @switch($client->status)
