@@ -8,6 +8,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +44,7 @@
 
 
         <!-- Page Content -->
-        <main class="w-full p-4 bg-gray-100 max-w[1920px] pb-28 md:pb-8 md:p-8">
+        <main class="w-full p-2 sm:p-4 bg-gray-100 max-w[1920px] pb-28 md:pb-8 md:p-8">
             {{ $slot }}
         </main>
 

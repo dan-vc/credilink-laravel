@@ -2,12 +2,73 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Client;
+use App\Models\Credit;
+use App\Models\Payment;
+use Carbon\Carbon;
+use IcehouseVentures\LaravelChartjs\Facades\Chartjs;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
     public function index()
     {
-        return view('reports');
+        DB::enableQueryLog();
+
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
+
+
+        $clients = Client::with(['credits', 'creator'])->paginate(5);
+        $totalCredits = Credit::count();
+        $totalPayments = Payment::whereMonth('paid_date', $month)->count();
+
+        $dueCredits = Credit::whereDate('end_date', '<', $now)->count();
+
+        // dd(DB::getQueryLog());
+
+        // Obtener el mes y año actual
+
+        // Agrupar los créditos creados este mes por día
+        $creditsPerDay = Credit::select(
+            DB::raw('DAY(start_date) as day'),
+            DB::raw('COUNT(*) as total')
+        )
+            ->whereYear('start_date', $year)
+            ->whereMonth('start_date', $month)
+            ->groupBy('day')
+            ->orderBy('day')
+            ->get();
+
+        // Crear arrays para Chart.js
+        $labels = [];
+        $data = [];
+
+        // Generar un registro por cada día del mes
+        $daysInMonth = $now->daysInMonth;
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $labels[] = str_pad($day, 2, '0', STR_PAD_LEFT); // ejemplo: 01, 02, 03
+            $found = $creditsPerDay->firstWhere('day', $day);
+            $data[] = $found ? $found->total : 0;
+        }
+
+        // Crear la gráfica con Chartjs
+        $chart = Chartjs::build()
+            ->name('CreditsPerDayChart')
+            ->type('bar')
+            // ->size(['width' => "100%", 'height' => 300])
+            ->options(['maintainAspectRatio' => false])
+            ->labels($labels)
+            ->datasets([
+                [
+                    'label' => 'Créditos otorgados',
+                    'backgroundColor' => 'rgba(0, 112, 224, 0.5)',
+                    'borderColor' => 'rgba(0, 112, 224, 0.7)',
+                    'data' => $data,
+                ],
+            ]);
+
+        return view('reports', compact('clients', 'chart', 'totalCredits', 'totalPayments', 'dueCredits'));
     }
 }

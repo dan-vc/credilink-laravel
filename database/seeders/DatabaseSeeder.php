@@ -37,5 +37,6 @@ class DatabaseSeeder extends Seeder
         Client::factory(5)->create();
         FinancialProduct::factory(3)->create();
         Credit::factory(15)->create();
+        Payment::factory(20)->create();
     }
 }

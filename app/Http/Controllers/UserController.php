@@ -5,14 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+
+        $query = $request->input('query');
+
         $roles = Role::all();
-        $users = User::with('role')->get();
+        $users = User::with('role')->when($query, function($q, $query){
+            $q->where('name', 'like', "%$query%");
+        })->paginate(10);
 
         return view('users', compact('users', 'roles'));
     }

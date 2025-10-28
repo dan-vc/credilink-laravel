@@ -1,1 +1,3 @@
-<input {{ $attributes->merge(['class' => 'bg-[#eee] border-none focus:ring-primary text-sm rounded-md shadow-sm w-full max-w-[350px]']) }}>
+<input
+    {{ $attributes->merge(['class' => 'bg-[#eee] border-none focus:ring-primary text-sm rounded-md shadow-sm w-full max-w-[350px]']) }}
+    name="query" type="search" value="{{ request('query') }}"/>

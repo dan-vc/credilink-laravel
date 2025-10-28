@@ -12,22 +12,31 @@ use Illuminate\Support\Facades\DB;
 
 class CreditController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // DB::enableQueryLog(); // 🔍 Activa el registro de consultas
+        // DB::enableQueryLog(); // 🔍 Activa el registro de consultass
 
-        // $credits = Credit::all();   
+        // $credits = Credit::all();
 
         // foreach ($credits as $credit) {
         //     $credit->client->name; // esto provoca N consultas extra
         //     $credit->approver->name; // esto provoca N consultas extra
         // }
-        
-        // dd(DB::getQueryLog()); // 🧾 Muestra todas las consultas ejecutadas
+
+        $query = $request->input('query');
 
         $clients = Client::all();
         $products = FinancialProduct::all();
-        $credits = Credit::with(['client', 'approver'])->get(); // Eager loading para evitar N+1
+
+        $credits = Credit::with(['client', 'approver', 'product'])->when($query, function ($q, $query) {
+            $q->whereHas('client', function ($subQuery) use ($query) {
+                $subQuery->where('name', 'like', "%$query%");
+            })->orwhereHas('approver', function ($subQuery) use ($query) {
+                $subQuery->where('name', 'like', "%$query%");
+            });
+        })->paginate(10);
+
+        // dd(DB::getQueryLog()); // 🧾 Muestra todas las consultas ejecutadas
 
         return view('dashboard', compact('credits', 'clients', 'products'));
     }
@@ -59,5 +68,19 @@ class CreditController extends Controller
             dd($th);
         }
 
+    }
+
+    public function showCreditsByClient(Client $client)
+    {
+        $credits = $client->credits()->paginate(10);
+
+        return view('credits', compact('credits', 'client'));
+    }
+
+    public function showPaymentsByCredit(Credit $credit)
+    {
+        $payments = $credit->payments()->paginate(10);
+
+        return view('payments', compact('payments', 'credit'));
     }
 }

@@ -9,9 +9,16 @@ use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::with('creator')->get();
+        $query = $request->input('query');
+
+        // $clients = Client::with('creator')->paginate(10);
+        $clients = Client::with('creator')->when($query, function($q, $query){
+            $q->where('name', 'like', "%$query%")->orwhereHas('creator', function($subQuery) use ($query){
+                $subQuery->where('name', 'like', "%$query%");
+            });
+        })->paginate(10);
 
         return view('clients', compact('clients'));
     }

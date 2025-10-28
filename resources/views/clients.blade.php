@@ -1,6 +1,8 @@
 <x-app-layout>
     <div class="bg-white rounded-xl px-4 py-3 mb-3 flex gap-2 justify-between items-stretch">
-        <x-search-input placeholder="Buscar..." id="search-input" />
+        <form action="" method="get" class="contents">
+            <x-search-input placeholder="Buscar..." id="search-input" />
+        </form>
 
         <x-primary-button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-new-user')">
             Añadir Cliente
@@ -169,12 +171,24 @@
                                     </svg>
                                 </span>
 
+                                <a href="{{ route('client.credits', $client) }}"
+                                    class="inline-flex border-2 border-primary rounded-md bg-[#00336620] px-2 py-1.5 cursor-pointer transition">
+                                    <svg width="20" height="20" viewBox="0 0 16 11" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M7.875 2.1875V2.21484C9.57031 2.21484 10.9375 3.58203 10.9375 5.25C10.9375 6.94531 9.57031 8.3125 7.875 8.3125C6.17969 8.3125 4.8125 6.94531 4.8125 5.25C4.8125 4.94922 4.86719 4.67578 4.94922 4.40234C5.14062 4.53906 5.41406 4.59375 5.6875 4.59375C6.50781 4.59375 7.21875 3.91016 7.21875 3.0625C7.19141 2.81641 7.13672 2.54297 7 2.32422C7.27344 2.24219 7.57422 2.21484 7.875 2.1875ZM15.6406 4.86719C15.6953 4.97656 15.7227 5.11328 15.7227 5.27734C15.7227 5.41406 15.6953 5.55078 15.6406 5.66016C14.1641 8.55859 11.2109 10.5 7.875 10.5C4.51172 10.5 1.55859 8.55859 0.0820312 5.66016C0.0273438 5.55078 0 5.41406 0 5.25C0 5.11328 0.0273438 4.97656 0.0820312 4.86719C1.55859 1.96875 4.51172 0 7.875 0C11.2109 0 14.1641 1.96875 15.6406 4.86719ZM7.875 9.1875C10.5547 9.1875 13.043 7.68359 14.3555 5.25C13.043 2.81641 10.5547 1.3125 7.875 1.3125C5.16797 1.3125 2.67969 2.81641 1.36719 5.25C2.67969 7.68359 5.16797 9.1875 7.875 9.1875Z"
+                                            fill="#003366" />
+                                    </svg>
+                                </a>
+
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
+
+        {{ $clients->links() }}
 
         <x-modal name="edit-client" focusable>
             <form method="post" action="" class="p-6">
@@ -215,7 +229,7 @@
                 <div class="mb-4">
                     <x-input-label for="status" value="Estado" class="mb-1" />
                     <x-select-input id="status" class="block w-full" name="status" required
-                        autocomplete="status" x-bind:value="selected?.status" >
+                        autocomplete="status" x-bind:value="selected?.status">
                         <option value="">Seleccione un estado</option>
                         <option value="active">Activado</option>
                         <option value="inactive">Desactivado</option>
@@ -226,7 +240,8 @@
                 <!-- Tipo de Cliente -->
                 <div class="mb-4">
                     <x-input-label for="type" value="Tipo de Cliente" class="mb-1" />
-                    <x-select-input id="type" class="block w-full" name="type" required autocomplete="type" x-bind:value="selected?.type" >
+                    <x-select-input id="type" class="block w-full" name="type" required autocomplete="type"
+                        x-bind:value="selected?.type">
                         <option value="">Seleccione un tipo</option>
                         <option value="empresa">Empresa</option>
                         <option value="cliente">Cliente</option>
@@ -262,25 +277,4 @@
             </form>
         </x-modal>
     </div>
-
-    <script>
-        function filterItems() {
-            const searchTerm = (document.getElementById('search-input')?.value || '').trim().toLowerCase();
-            const items = document.querySelectorAll('.filter-item');
-
-            items.forEach(item => {
-                const client = (item.getAttribute('data-client') || '').toLowerCase();
-                const approver = (item.getAttribute('data-approver') || '').toLowerCase();
-
-                // si searchTerm está vacío => todos los items cumplen
-                const matchesSearch = !searchTerm || client.includes(searchTerm) || approver.includes(searchTerm);
-
-                matchesSearch ? item.style.display = '' : item.style.display = 'none';
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('search-input')?.addEventListener('input', filterItems);
-        });
-    </script>
 </x-app-layout>
