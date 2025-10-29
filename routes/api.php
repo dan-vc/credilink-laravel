@@ -28,15 +28,3 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-
-
-/*
-return response()->json([
-    'status' => 'success',
-    'message' => 'Hola Laravel está funcionando correctamente',
-    'data' => [
-        ['id' => '0', 'nombre' => 'josue']
-    ],
-    'error' => null
-]);
-*/
