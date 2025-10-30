@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Credit;
 use App\Models\FinancialProduct;
 use App\Models\Payment;
+use App\Models\Report;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -75,6 +76,17 @@ class CreditController extends Controller
             Payment::create($payment);
         }
 
+        Report::create([
+            'report_date'      => now(),
+            'total_paid'       => 0,
+            'pending_balance'  => $credit->amount,
+            'months_paid'      => 0,
+            'months_pending'   => $credit->term_months,
+            'interest_accrued' => 0,
+            'credit_id'        => $credit->id,
+            'client_id'        => $credit->client_id,
+        ]);
+
         return apiResponse([
             'status' => 'success',
             'message' => 'Crédito creado correctamente',
@@ -104,25 +116,59 @@ class CreditController extends Controller
         $validatedData = $request->validate([
             'id' => 'required|numeric|exists:credits,id',
         ]);
-        $payments = Payment::where('credit_id', $validatedData['id'])->get();
-        
-        //Sumar todos los pagos que su estado es "pagado realizado" y ponerlo en creditos
-        $total = 0;
-        foreach ($payments as $payment) {
-            if ($payment->status === 'pagado realizado') {
-                $total += $payment->amount;
-            }
-        }
 
-        $credit = Credit::find($validatedData['id'])->update(['paid_balance' => $total]);
-        
+        // Obtener el crédito
+        $credit = Credit::findOrFail($validatedData['id']);
+
+        // Obtener todos los pagos del crédito
+        $payments = Payment::where('credit_id', $credit->id)->get();
+
+        // Calcular totales
+        $totalPaid = $payments
+            ->where('status', 'pagado realizado')
+            ->sum('amount');
+
+        $pendingBalance = $credit->amount - $totalPaid;
+
+        // Calcular meses pagados y pendientes
+        $monthsPaid = $payments->where('status', 'pago realizado')->count();
+        $monthsPending = $credit->term_months - $monthsPaid;
+
+        // Calcular interés acumulado (si aplica)
+        $interestAccrued = $payments
+            ->where('status', 'atrasado')
+            ->sum('extra_payment');
+
+        // Actualizar crédito
+        $credit->update([
+            'paid_balance' => $totalPaid,
+            'pending_balance' => $pendingBalance,
+        ]);
+
+        // Buscar o crear reporte
+        $report = Report::firstOrNew(['credit_id' => $credit->id]);
+        $report->fill([
+            'report_date' => now(),
+            'total_paid' => $totalPaid,
+            'pending_balance' => $pendingBalance,
+            'months_paid' => $monthsPaid,
+            'months_pending' => $monthsPending,
+            'interest_accured' => $interestAccrued,
+            'client_id' => $credit->client_id,
+        ]);
+        $report->save();
 
         return apiResponse([
             'status' => 'success',
-            'message' => 'Balance pagado calculado correctamente',
+            'message' => 'Balance y reporte actualizados correctamente',
             'data' => [
-                'credito' => $credit,
-                'total_pagado' => $total,
+                'credito' => $credit->fresh(),
+                'reporte' => $report,
+                'total_pagado' => $totalPaid,
+                'saldo_pendiente' => $pendingBalance,
+                'meses_pagados' => $monthsPaid,
+                'meses_pendientes' => $monthsPending,
+                'interes_acumulado' => $interestAccrued,
             ],
             'error' => null,
         ], 200);

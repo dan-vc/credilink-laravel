@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Credit;
 use App\Models\Payment;
+use App\Models\Report;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -76,6 +77,27 @@ class PaymentsController extends Controller
         $validatedData['status'] = 'pago realizado';
         $validatedData['paid_date'] = now()->toDateString();
         $payment->update($validatedData);
+        //reporte
+        $credit = $payment->credit;
+        $payments = Payment::where('credit_id', $credit->id)->get();
+
+        $totalPaid = $payments->where('status', 'pago realizado')->sum('amount');
+        $pendingBalance = $credit->amount - $totalPaid;
+        $monthsPaid = $payments->where('status', 'pago realizado')->count();
+        $monthsPending = $credit->term_months - $monthsPaid;
+        $interestAccrued = $payments->sum('extra_payment');
+
+        $report = Report::firstOrNew(['credit_id' => $credit->id]);
+        $report->fill([
+            'report_date' => now(),
+            'total_paid' => $totalPaid,
+            'pending_balance' => $pendingBalance,
+            'months_paid' => $monthsPaid,
+            'months_pending' => $monthsPending,
+            'interest_accured' => $interestAccrued,
+            'client_id' => $credit->client_id,
+        ]);
+        $report->save();
         return apiResponse([
             'status' => 'success',
             'message' => 'Pago actualizado correctamente',
