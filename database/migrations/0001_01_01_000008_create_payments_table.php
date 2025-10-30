@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->decimal('amount', 15, 2);
-            $table->enum('payment_type', ['efectivo', 'transferencia', 'tarjeta']);
+            $table->enum('payment_type', ['efectivo', 'transferencia', 'tarjeta'])->nullable();
             $table->text('payment_note')->nullable();
             $table->enum('status', ['pago realizado', 'no pagado', 'atrasado'])->default( 'no pagado');
             $table->decimal('extra_payment', 15, 2);
             $table->decimal('total', 15,2);
             $table->date('start_date');
             $table->date('due_date');
-            $table->date('paid_date');
+            $table->date('paid_date')->nullable();
             $table->foreignId('credit_id')->constrained('credits')->restrictOnDelete();
-            $table->foreignId('processed_by')->constrained('users')->restrictOnDelete();
+            $table->foreignId('processed_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }

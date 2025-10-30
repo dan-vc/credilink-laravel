@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\Api\CreditController;
 use App\Http\Controllers\Api\FinancialProductController;
+use App\Http\Controllers\Api\PaymentsController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -36,6 +38,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/client', [ClientController::class, 'store']);
     Route::put('/client', [ClientController::class, 'update']);
     Route::delete('/client', [ClientController::class, 'destroy']);
+    // CRUD CREDITOS
+    Route::get('/credits', [CreditController::class, 'index']);
+    Route::post('/credits/{id}', [CreditController::class, 'show']);
+    Route::post('/credit', [CreditController::class, 'store']);
+    Route::put('/creditstatus', [CreditController::class, 'changeStatus']);
+    Route::put('/creditscalcapaid', [CreditController::class, 'calcPaidBalance']);
+    // CRUD PAGOS
+    Route::get('/payments', [PaymentsController::class, 'index']);
+    Route::post('/payment/{id}', [PaymentsController::class, 'show']);
+    Route::post('/showspayscredit/{id}', [PaymentsController::class, 'showsPaysCredit']);
+    Route::put('/payment', [PaymentsController::class, 'payPayment']);
+    Route::put('/paymentchangestatus', [PaymentsController::class, 'changeStatus']);
+
 });
 
 /**
