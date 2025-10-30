@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\CreditController;
 use App\Http\Controllers\Api\FinancialProductController;
 use App\Http\Controllers\Api\PaymentsController;
+use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -50,7 +51,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/showspayscredit/{id}', [PaymentsController::class, 'showsPaysCredit']);
     Route::put('/payment', [PaymentsController::class, 'payPayment']);
     Route::put('/paymentchangestatus', [PaymentsController::class, 'changeStatus']);
-
+    // CRUD REPORTES
+    Route::get('/reports', [ReportController::class, 'index']);
+    Route::post('/report/{id}', [ReportController::class, 'show']);
+    Route::post('/reportbyclient/{id}', [ReportController::class, 'showReportByClient']);
+    Route::post('/reportbycredit/{id}', [ReportController::class, 'showReportByCredit']);
 });
 
 /**
