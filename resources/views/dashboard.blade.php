@@ -1,3 +1,7 @@
+@php
+    $today = now('America/Lima')->format('Y-m-d');
+@endphp
+
 <x-app-layout>
     <div class="bg-white rounded-xl px-4 py-3 mb-3 flex gap-2 justify-between items-stretch">
         <form action="" method="get" class="contents">
@@ -59,26 +63,75 @@
                         <x-input-error :messages="$errors->get('amount')" class="mt-2" />
                     </div>
 
-                    <!-- Fechas -->
-                    <div class="grid grid-cols-2 gap-2 mb-4">
-                        @php
-                            $today = now('America/Lima')->format('Y-m-d');
-                        @endphp
-                        <!-- Fecha Inicial -->
-                        <div>
-                            <x-input-label for="start_date" value="Fecha Inicial" class="mb-1" />
-                            <x-text-input id="start_date" class="block w-full bg-gray-200" type="date" name="start_date" required
-                                autocomplete="start_date" value="{{ $today }}"
-                                readonly />
-                            <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
+                    <!-- Meses -->
+                    <div x-data="{
+                        selectedTerm: @js(old('term_months') ?? null),
+                        monthsArray: [],
+                        startDate: '{{ $today }}',
+                        endDate: '',
+                        calculateEndDate() {
+                            if (!this.startDate || !this.selectedTerm) {
+                                this.endDate = '';
+                                return;
+                            }
+                            // Convertir fecha inicial a objeto Date
+                            const start = new Date(this.startDate);
+                            // Sumar meses
+                            start.setMonth(start.getMonth() + Number(this.selectedTerm));
+                    
+                            // Ajustar día si sobrepasa el fin del mes
+                            const finalDate = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+                            this.endDate = finalDate.toISOString().split('T')[0];
+                        }
+                    }"
+                        x-effect="
+                    monthsArray = selected ? Array.from({ length: Number(selected.max_term_months) }, (_, i) => i + 1) : [];
+                    if (selectedTerm && selected && Number(selectedTerm) > Number(selected.max_term_months)) selectedTerm = null;
+                    calculateEndDate();"
+                        x-init="calculateEndDate()">
+
+                        <div class="mb-4">
+
+                            <!-- Meses -->
+                            <x-input-label for="term_months" value="Meses" class="mb-1" />
+                            <div class="flex gap-2 mb-4">
+                                <select id="term_months" name="term_months" required
+                                    class="block w-full rounded-md border-gray-300"
+                                    x-bind:disabled="!selected || monthsArray.length === 0" x-model="selectedTerm"
+                                    x-on:change="calculateEndDate()">
+                                    <option value="" disabled x-show="!selected">Seleccione meses</option>
+                                    <template x-for="m in monthsArray" :key="m">
+                                        <option :value="m" x-text="m + (m === 1 ? ' mes' : ' meses')">
+                                        </option>
+                                    </template>
+                                </select>
+
+                                <span class="inline-flex items-center bg-gray-200 rounded-md px-4">
+                                    meses
+                                </span>
+                            </div>
+                            <x-input-error :messages="$errors->get('term_months')" class="mt-2" />
                         </div>
-                        <!-- Fecha Final -->
-                        <div>
-                            <x-input-label for="end_date" value="Fecha Final" class="mb-1" />
-                            <x-text-input id="end_date" class="block w-full" type="date" name="end_date" required
-                                autocomplete="end_date" min="{{ $today }}" />
-                            <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
+
+                        <!-- Fechas -->
+                        <div class="grid grid-cols-2 gap-2 mb-4">
+                            <!-- Fecha Inicial -->
+                            <div>
+                                <x-input-label for="start_date" value="Fecha Inicial" class="mb-1" />
+                                <x-text-input id="start_date" class="block w-full bg-gray-200" type="date"
+                                    name="start_date" required readonly x-model="startDate" />
+                                <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
+                            </div>
+
+                            <!-- Fecha Final -->
+                            <div>
+                                <x-input-label for="end_date" value="Fecha Final" class="mb-1" />
+                                <x-text-input id="end_date" class="block w-full bg-gray-200" type="date"
+                                    name="end_date" required readonly x-model="endDate" />
+                                <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
+                            </div>
                         </div>
+
                     </div>
 
                     <x-primary-button class="w-full">
@@ -161,7 +214,7 @@
                             </td>
                             <td class="px-3 py-4">
                                 S/. {{ number_format($credit->amount, 2, '.', ',') }}
-                                
+
                             </td>
                             <td class="px-3 py-4">
                                 @if ($credit->approver)
@@ -297,8 +350,8 @@
                     <!-- Fecha Inicial -->
                     <div>
                         <x-input-label for="start_date" value="Fecha Inicial" class="mb-1" />
-                        <x-text-input id="start_date" class="block w-full bg-gray-200" type="date" name="start_date" required
-                            autocomplete="start_date" placeholder="dd/mm/yyyy" readonly
+                        <x-text-input id="start_date" class="block w-full bg-gray-200" type="date"
+                            name="start_date" required autocomplete="start_date" placeholder="dd/mm/yyyy" readonly
                             x-bind:value="selected?.start_date" />
                         <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
                     </div>

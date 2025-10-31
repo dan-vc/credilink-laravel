@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('credits/{client}', [CreditController::class, 'showCreditsByClient'])->name('client.credits');
     Route::get('payments/{credit}', [CreditController::class, 'showPaymentsByCredit'])->name('client.payments');
+    Route::put('payments/pay/{payment}', [CreditController::class, 'payPayment'])->name('payments.pay');
     
     Route::get('reports', [ReportController::class, 'index'])->name('reports');
 });

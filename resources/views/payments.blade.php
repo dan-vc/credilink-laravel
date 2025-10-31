@@ -9,7 +9,7 @@
         </x-danger-button>
     </div>
 
-    <div class="bg-white rounded-xl px-4 py-8">
+    <div class="bg-white rounded-xl px-4 py-8"  x-data="{ selected: null }>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-5">
             Crédito #{{ $credit->id }}: Pagos de {{ $credit->client->name }}
         </h2>
@@ -88,7 +88,8 @@
         </div>
 
         <!-- Payment Cards Grid -->
-        <div id="paymentsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-5">
+        <div id="paymentsGrid"
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-5">
 
             @foreach ($payments as $payment)
                 @php
@@ -113,7 +114,6 @@
                     }
                 @endphp
 
-                <!-- Pago 1 - No Pagado (Azul) -->
                 <div class="{{ $class }} rounded-xl p-5 sm:p-6 text-white shadow-lg payment-card"
                     data-keywords="pago 1 no pagado falta pagar 9/10/2025 1.00">
                     <div class="mb-4">
@@ -136,100 +136,48 @@
                         </p>
                         <p class="text-sm">
                             <span class="font-semibold">Pago Extra:</span> <span class="italic">
-                                {{ "S/. " . $payment->extra_payment ?? 'No pagado' }}
+                                {{ 'S/. ' . $payment->extra_payment ?? 'No pagado' }}
                             </span>
                         </p>
                     </div>
 
-                    <span
-                        class="block w-full text-center bg-white text-[#003366] font-semibold py-2.5 px-4 rounded-lg">
-                        {{ $text }}
-                    </span>
+                    <div class="flex items-stretch gap-2">
+                        <span
+                            class="block w-full text-center bg-white text-[#003366] font-semibold py-2.5 px-4 rounded-lg">
+                            {{ $text }}
+                        </span>
+
+                        <span x-data="" x-on:click.prevent="$dispatch('open-modal', 'pay-payment'); selected = @js($payment)" class="bg-secondary rounded-lg py-2.5 px-4 text-primary font-semibold cursor-pointer">
+                            Pagar
+                        </span>
+                    </div>
                 </div>
             @endforeach
-
-            <!-- Pago 1 - No Pagado (Azul) -->
-            {{-- <div class="gradient-blue rounded-xl p-5 sm:p-6 text-white shadow-lg payment-card"
-                data-keywords="pago 1 no pagado falta pagar 9/10/2025 1.00">
-                <div class="mb-4">
-                    <h3 class="text-lg sm:text-xl font-bold mb-2">Pago 1</h3>
-                    <p class="text-xs sm:text-sm opacity-90">Fecha Limite: 9/10/2025</p>
-                    <p class="text-xs sm:text-sm opacity-90">Fecha Pagado: No disponible</p>
-                </div>
-
-                <div class="mb-4">
-                    <p class="text-3xl sm:text-4xl font-bold">S/ 1.00</p>
-                </div>
-
-                <div class="mb-4 space-y-1">
-                    <p class="text-sm">
-                        <span class="font-semibold">Tipo:</span> <span class="italic">Falta pagar</span>
-                    </p>
-                    <p class="text-sm">
-                        <span class="font-semibold">Pago Extra:</span> <span class="italic">Falta pagar</span>
-                    </p>
-                </div>
-
-                <button
-                    class="w-full bg-white text-[#003366] font-semibold py-2.5 px-4 rounded-lg hover:bg-gray-100 transition-colors">
-                    No pagado
-                </button>
-            </div>
-
-            <!-- Pago 2 - Realizado (Verde) -->
-            <div class="gradient-green rounded-xl p-5 sm:p-6 text-white shadow-lg payment-card"
-                data-keywords="pago 2 realizado transferencia bancaria 8/10/2025 1.00">
-                <div class="mb-4">
-                    <h3 class="text-lg sm:text-xl font-bold mb-2">Pago 2</h3>
-                    <p class="text-xs sm:text-sm opacity-90">Fecha Limite: 8/10/2025</p>
-                    <p class="text-xs sm:text-sm opacity-90">Fecha Pagado: 8/10/2025</p>
-                </div>
-
-                <div class="mb-4">
-                    <p class="text-3xl sm:text-4xl font-bold">S/ 1.00</p>
-                </div>
-
-                <div class="mb-4 space-y-1">
-                    <p class="text-sm">
-                        <span class="font-semibold">Tipo:</span> <span class="italic">Transferencia
-                            Bancaria</span>
-                    </p>
-                </div>
-
-                <button
-                    class="w-full bg-white text-[#003528] font-semibold py-2.5 px-4 rounded-lg hover:bg-gray-100 transition-colors">
-                    Pago Realizado
-                </button>
-            </div>
-
-            <!-- Pago 3 - Atrasado (Rojo) -->
-            <div class="gradient-red rounded-xl p-5 sm:p-6 text-white shadow-lg payment-card"
-                data-keywords="pago 3 atrasado falta pagar 10/10/2025 1.00 6 soles">
-                <div class="mb-4">
-                    <h3 class="text-lg sm:text-xl font-bold mb-2">Pago 3</h3>
-                    <p class="text-xs sm:text-sm opacity-90">Fecha Limite: 10/10/2025</p>
-                    <p class="text-xs sm:text-sm opacity-90">Fecha Pagado: No disponible</p>
-                </div>
-
-                <div class="mb-4">
-                    <p class="text-3xl sm:text-4xl font-bold">S/ 1.00</p>
-                </div>
-
-                <div class="mb-4 space-y-1">
-                    <p class="text-sm">
-                        <span class="font-semibold">Tipo:</span> <span class="italic">Falta pagar</span>
-                    </p>
-                    <p class="text-sm">
-                        <span class="font-semibold">Pago Extra:</span> <span class="italic">6 soles</span>
-                    </p>
-                </div>
-
-                <button
-                    class="w-full bg-white text-[#85241D] font-semibold py-2.5 px-4 rounded-lg hover:bg-gray-100 transition-colors">
-                    Atrasado
-                </button>
-            </div> --}}
         </div>
 
+        <x-modal name="pay-payment" focusable>
+            <form method="post" class="p-6">
+                @csrf
+                @method('PUT')
+
+                <h2 class="text-xl font-semibold mb-4">
+                    Realizar pago
+                </h2>
+
+                <x-text-input type="hidden" name="id" required x-bind:value="selected?.id" />
+
+                <!-- Correo Electrónico -->
+                <div class="mb-4">
+                    <x-input-label for="email" value="Correo Electrónico" class="mb-1" />
+                    <x-text-input id="email" class="block w-full" type="email" name="email" required
+                        autocomplete="email" placeholder="carlosrv@gmail.com" />
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                </div>
+
+                <x-primary-button class="w-full">
+                    Añadir Empleado
+                </x-primary-button>
+            </form>
+        </x-modal>
     </div>
 </x-app-layout>
