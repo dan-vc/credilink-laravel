@@ -62,8 +62,9 @@ class ClientController extends Controller
             'id' => 'required|numeric|exists:clients,id',
         ]);
 
-        $user = Client::find($validatedData['id']);
-        $user->delete();
+        $client = Client::find($validatedData['id']);
+        $client->status = 'inactive';
+        $client->save();
 
         return redirect()->route('clients')->with('success', 'Cliente eliminado exitosamente');
     }

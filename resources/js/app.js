@@ -6,55 +6,39 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-// import Chart from 'chart.js/auto'
+// Generar contraseña de empleado
+document.getElementById('generatePassword').addEventListener('click', function () {
+    const length = 12; // puedes cambiarlo
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=";
+    let password = "";
 
-// (async function () {
-//     const data = [{
-//         year: 2010,
-//         count: 10
-//     },
-//     {
-//         year: 2011,
-//         count: 20
-//     },
-//     {
-//         year: 2012,
-//         count: 15
-//     },
-//     {
-//         year: 2013,
-//         count: 25
-//     },
-//     {
-//         year: 2014,
-//         count: 22
-//     },
-//     {
-//         year: 2015,
-//         count: 30
-//     },
-//     {
-//         year: 2016,
-//         count: 28
-//     },
-//     ];
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset[randomIndex];
+    }
 
-//     const canvas = document.getElementById('total-credits');
+    // Mostrar la contraseña en el input
+    const input = document.getElementById('password');
+    input.value = password;
 
+    // (Opcional) cambiar el tipo a texto por unos segundos
+    input.type = 'text';
+    setTimeout(() => input.type = 'password', 2000);
+});
 
-//     new Chart(
-//         canvas, {
-//         type: 'bar',
-//         data: {
-//             labels: data.map(row => row.year),
-//             datasets: [{
-//                 label: 'Acquisitions by year',
-//                 data: data.map(row => row.count)
-//             }]
-//         },
-//         options: {
-//             maintainAspectRatio: false,
-//         }
-//     }
-//     );
-// })();
+document.getElementById('copyPassword').addEventListener('click', async function () {
+        const input = document.getElementById('password');
+        const copyMessage = document.getElementById('copyMessage');
+
+        try {
+            await navigator.clipboard.writeText(input.value);
+            copyMessage.classList.remove('hidden');
+            copyMessage.classList.remove('text-red-500');
+            copyMessage.textContent = 'Contraseña copiada';
+            setTimeout(() => copyMessage.classList.add('hidden'), 2000);
+        } catch (err) {
+            copyMessage.classList.remove('hidden');
+            copyMessage.classList.add('text-red-500');
+            copyMessage.textContent = 'Error al copiar';
+        }
+    });

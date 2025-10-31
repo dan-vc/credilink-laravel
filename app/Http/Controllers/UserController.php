@@ -16,7 +16,7 @@ class UserController extends Controller
         $query = $request->input('query');
 
         $roles = Role::all();
-        $users = User::with('role')->when($query, function($q, $query){
+        $users = User::with('role')->when($query, function ($q, $query) {
             $q->where('name', 'like', "%$query%");
         })->paginate(10);
 
@@ -57,6 +57,12 @@ class UserController extends Controller
         }
 
         $user = User::find($validatedData['id']);
+
+        if ($validatedData['status'] === 'inactive') {
+            // Eliminar sesiones activas del usuario
+            DB::table('sessions')->where('user_id', $user->id)->delete();
+        }
+
         $user->update($validatedData);
 
         return redirect()->route('users')->with('success', 'Empleado actualizado exitosamente');
@@ -69,8 +75,14 @@ class UserController extends Controller
         ]);
 
         $user = User::find($validatedData['id']);
-        $user->delete();
+        $user->status = 'inactive';
+        $user->save();
 
-        return redirect()->route('users')->with('success', 'Empleado eliminado exitosamente');
+        // Eliminar sesiones activas del usuario
+        DB::table('sessions')->where('user_id', $user->id)->delete();
+
+        // $user->delete();
+
+        return redirect()->route('users')->with('success', 'Empleado desactivado exitosamente');
     }
 }

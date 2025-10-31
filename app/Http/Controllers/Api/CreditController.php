@@ -51,9 +51,9 @@ class CreditController extends Controller
             throw new Exception('Producto financiero no encontrado');
         }
         $validatedData['interest_rate'] = $finacialProduct->interest_rate;
-        $validatedData['term_months'] = $finacialProduct->max_term_months;
-        $validatedData['start_date'] = now();
-        $validatedData['end_date'] = now()->addMonths($finacialProduct->max_term_months);
+        $validatedData['term_months'] = $finacialProduct->max_term_months; // Meses del crédito
+        $validatedData['start_date'] = now(); // Obtiene la fecha actual
+        $validatedData['end_date'] = now()->addMonths($finacialProduct->max_term_months); // Ahora + X Meses
 
 
         $credit = Credit::create($validatedData);

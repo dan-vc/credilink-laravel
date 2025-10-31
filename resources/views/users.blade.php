@@ -1,5 +1,6 @@
 <x-app-layout>
-    <div class="bg-white rounded-xl px-4 py-3 mb-3 flex flex-col gap-2 justify-between items-stretch sm:flex-row md:flex-col lg:flex-row">
+    <div
+        class="bg-white rounded-xl px-4 py-3 mb-3 flex flex-col gap-2 justify-between items-stretch sm:flex-row md:flex-col lg:flex-row">
         <form action="" method="get" class="contents">
             <x-search-input placeholder="Buscar..." id="search-input" />
         </form>
@@ -53,11 +54,22 @@
                         <x-text-input id="password" class="block w-full" type="password" name="password" required
                             autocomplete="password" placeholder="**********" />
 
-                        <button class="inline-flex items-center bg-gray-200 rounded-md px-4">
+                        <button type="button" id="copyPassword"
+                            class="inline-flex items-center bg-gray-200 rounded-md px-4 hover:bg-gray-300 transition">
+                            <svg width="20" height="20" viewBox="0 0 18 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M15 0C15.5625 0 16.0312 0.203125 16.4062 0.609375C16.8125 0.984375 17.0156 1.4375 17.0156 1.96875V13.9688C17.0156 14.5312 16.8125 15.0156 16.4062 15.4219C16.0312 15.7969 15.5625 15.9844 15 15.9844H6C5.4375 15.9844 4.95312 15.7969 4.54688 15.4219C4.17188 15.0156 3.98438 14.5312 3.98438 13.9688V1.96875C3.98438 1.4375 4.17188 0.984375 4.54688 0.609375C4.95312 0.203125 5.4375 0 6 0H15ZM15 13.9688V1.96875H6V13.9688H15ZM0 12.9844H2.01562V10.9688H0V12.9844ZM0 7.5V9.46875H2.01562V7.5H0ZM6.98438 18V19.9688H9V18H6.98438ZM0 16.5H2.01562V14.4844H0V16.5ZM2.01562 19.9688V18H0C0 18.5312 0.1875 19 0.5625 19.4062C0.96875 19.7812 1.45312 19.9688 2.01562 19.9688ZM5.48438 19.9688V18H3.51562V19.9688H5.48438ZM10.5 19.9688C11.0625 19.9688 11.5312 19.7812 11.9062 19.4062C12.3125 19 12.5156 18.5312 12.5156 18H10.5V19.9688ZM2.01562 3.98438C1.45312 3.98438 0.96875 4.1875 0.5625 4.59375C0.1875 4.96875 0 5.4375 0 6H2.01562V3.98438Z"
+                                    fill="black" />
+                            </svg>
+                        </button>
+                        <button type="button" id="generatePassword"
+                            class="inline-flex items-center bg-gray-200 rounded-md px-4 hover:bg-primary hover:text-white transition">
                             Generar
                         </button>
                     </div>
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                    <p id="copyMessage" class="text-green-600 text-sm mt-1 hidden">Contraseña copiada</p>
                 </div>
 
                 <!-- Estado -->
@@ -161,11 +173,12 @@
 
                                 <span x-data
                                     x-on:click="$dispatch('open-modal', 'confirm-delete-user'); selected = @js($user)"
-                                    class="inline-flex border-2 border-red-300 rounded-md bg-red-50 px-2 py-1.5 cursor-pointer transition">
-                                    <svg width="20" height="20" viewBox="0 0 14 15" fill="none"
+                                    class="inline-flex border-2 border-red-300 rounded-md bg-red-50 px-2 py-1.5 cursor-pointer transition 
+                                    @if ($user->status === 'inactive') opacity-50 pointer-events-none @endif">
+                                    <svg width="20" height="20" viewBox="0 0 22 19" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
-                                            d="M8.20312 12.125C8.01172 12.125 7.875 11.9883 7.875 11.7969V5.89062C7.875 5.72656 8.01172 5.5625 8.20312 5.5625H8.85938C9.02344 5.5625 9.1875 5.72656 9.1875 5.89062V11.7969C9.1875 11.9883 9.02344 12.125 8.85938 12.125H8.20312ZM12.6875 2.9375C12.9062 2.9375 13.125 3.15625 13.125 3.375V3.8125C13.125 4.05859 12.9062 4.25 12.6875 4.25H12.25V13.4375C12.25 14.1758 11.6484 14.75 10.9375 14.75H3.0625C2.32422 14.75 1.75 14.1758 1.75 13.4375V4.25H1.3125C1.06641 4.25 0.875 4.05859 0.875 3.8125V3.375C0.875 3.15625 1.06641 2.9375 1.3125 2.9375H3.55469L4.48438 1.40625C4.70312 1.02344 5.14062 0.75 5.60547 0.75H8.36719C8.83203 0.75 9.26953 1.02344 9.48828 1.40625L10.418 2.9375H12.6875ZM5.55078 2.14453L5.08594 2.9375H8.88672L8.42188 2.14453C8.39453 2.11719 8.33984 2.0625 8.28516 2.0625H5.71484C5.6875 2.0625 5.6875 2.0625 5.6875 2.0625C5.63281 2.0625 5.57812 2.11719 5.55078 2.14453ZM10.9375 13.4375V4.25H3.0625V13.4375H10.9375ZM5.14062 12.125C4.94922 12.125 4.8125 11.9883 4.8125 11.7969V5.89062C4.8125 5.72656 4.94922 5.5625 5.14062 5.5625H5.79688C5.96094 5.5625 6.125 5.72656 6.125 5.89062V11.7969C6.125 11.9883 5.96094 12.125 5.79688 12.125H5.14062Z"
+                                            d="M10.875 6H11.0156C11.8281 6 12.5312 6.29688 13.125 6.89062C13.7188 7.48438 14.0156 8.1875 14.0156 9V9.1875L10.875 6ZM6.5625 6.79688C6.1875 7.54688 6 8.28125 6 9C6 10.375 6.48438 11.5625 7.45312 12.5625C8.45312 13.5312 9.64062 14.0156 11.0156 14.0156C11.7344 14.0156 12.4688 13.8281 13.2188 13.4531L11.6719 11.9062C11.4219 11.9688 11.2031 12 11.0156 12C10.2031 12 9.5 11.7031 8.90625 11.1094C8.3125 10.5156 8.01562 9.8125 8.01562 9C8.01562 8.8125 8.04688 8.59375 8.10938 8.34375L6.5625 6.79688ZM1.03125 1.26562L2.29688 0L20.0156 17.7188L18.75 18.9844C18.5938 18.8281 18.0938 18.3438 17.25 17.5312C16.4375 16.7188 15.8125 16.0938 15.375 15.6562C14.0312 16.2188 12.5781 16.5 11.0156 16.5C8.54688 16.5 6.3125 15.8125 4.3125 14.4375C2.3125 13.0625 0.875 11.25 0 9C0.34375 8.1875 0.875 7.29688 1.59375 6.32812C2.34375 5.32812 3.0625 4.5625 3.75 4.03125C3.375 3.65625 2.84375 3.125 2.15625 2.4375C1.5 1.75 1.125 1.35938 1.03125 1.26562ZM11.0156 3.98438C10.3906 3.98438 9.78125 4.10938 9.1875 4.35938L7.03125 2.20312C8.25 1.73438 9.57812 1.5 11.0156 1.5C13.4844 1.5 15.7031 2.1875 17.6719 3.5625C19.6719 4.9375 21.1094 6.75 21.9844 9C21.2344 10.8438 20.0938 12.4219 18.5625 13.7344L15.6562 10.8281C15.9062 10.2344 16.0312 9.625 16.0312 9C16.0312 7.625 15.5312 6.45312 14.5312 5.48438C13.5625 4.48438 12.3906 3.98438 11.0156 3.98438Z"
                                             fill="#EB4034" />
                                     </svg>
                                 </span>
@@ -254,18 +267,14 @@
                 @method('DELETE')
 
                 <h2 class="text-xl font-semibold mb-2">
-                    ¿Estás seguro de que deseas eliminar el empleado <span class="font-bold italic"
+                    ¿Estás seguro de que deseas desactivar el empleado <span class="font-bold italic"
                         x-text="selected?.name"></span>?
                 </h2>
-
-                <p class="text-gray-600 mb-4">
-                    Esta acción es irrevesible.
-                </p>
 
                 <x-text-input type="hidden" name="id" required x-bind:value="selected?.id" />
 
                 <x-danger-button class="w-full">
-                    Eliminar Empleado
+                    Desactivar Empleado
                 </x-danger-button>
             </form>
         </x-modal>

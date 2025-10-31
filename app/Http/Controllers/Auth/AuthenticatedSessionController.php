@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Support\Str;
-use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -27,8 +27,14 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        $user = User::where('email', $request['email'])->first();
+        if ($user->status === 'inactive') {
+            return back()->with('error', 'El usuario se encuentra desactivado.');
+        }
+
         $request->authenticate();
         $request->session()->regenerate();
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
@@ -40,6 +46,7 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect('login');
     }
 
@@ -65,6 +72,7 @@ class AuthenticatedSessionController extends Controller
             );
 
             Auth::login($user, true);
+
             return redirect('/dashboard');
         } catch (\Exception $e) {
             return redirect('/login')->withErrors(['social_errors' => 'Error iniciando sesión con Google $e']);
@@ -82,8 +90,7 @@ class AuthenticatedSessionController extends Controller
         try {
             $githubUser = Socialite::driver('github')->user();
 
-            
-            $user = User::updateOrCreate( 
+            $user = User::updateOrCreate(
                 ['email' => $githubUser->getEmail()],
                 [
                     'name' => $githubUser->getName() ?? $githubUser->getNickname(),
@@ -91,10 +98,11 @@ class AuthenticatedSessionController extends Controller
                     'role_id' => 2,
                     'github_id' => $githubUser->getId(),
                     'avatar' => $githubUser->getAvatar(),
-                    ]
-                );
+                ]
+            );
 
             Auth::login($user, true);
+
             return redirect('/dashboard');
         } catch (\Exception $e) {
             return redirect('/login')->withErrors(['social_errors' => 'Error iniciando sesión con GitHub']);

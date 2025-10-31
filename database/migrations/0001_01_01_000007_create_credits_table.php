@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('paid_balance', 15, 2)->default(0);
             $table->foreignId('product_id')->constrained('financial_products')->restrictOnDelete();
             $table->foreignId('client_id')->constrained('clients')->restrictOnDelete();
-            $table->foreignId('approved_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('approved_by')->constrained('users')->restrictOnDelete();
             $table->timestamps();
         });
     }

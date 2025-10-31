@@ -10,6 +10,9 @@
 </head>
 
 <body>
+
+
+
     <header class="block-1">
         <img src="{{ asset('img/login/logo.webp') }}" alt="Logo">
     </header>
@@ -61,6 +64,11 @@
                             @error('password')
                                 <div style="color: red;">{{ $message }}</div>
                             @enderror
+                            @if (session('error'))
+                                <div style="color: red;">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
                         </div>
                         <br><br>
                         <!-- Submit -->
