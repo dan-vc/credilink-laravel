@@ -8,7 +8,6 @@ use App\Models\FinancialProduct;
 use App\Models\Payment;
 use App\Models\Report;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -111,23 +110,32 @@ class CreditController extends Controller
 
     public function showPaymentsByCredit(Credit $credit)
     {
-        $payments = $credit->payments()->paginate(10);
+        $payments = $credit->payments()->paginate(8);
 
         return view('payments', compact('payments', 'credit'));
     }
 
-    public function payPayment(Payment $payment) {
-        if($payment->status === 'pago realizado') {
-            throw new Exception('El pago ya ha sido realizado');
-        }
-        if($payment->due_date < now()->toDateString() || $payment->status === 'atrasado') {
-            $validatedData['extra_payment'] = round(($payment->credit->amount / $payment->credit->term_months) * ($payment->credit->interest_rate / 100),2);
+    public function payPayment(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id' => 'required|numeric|exists:payments,id',
+            'payment_type' => 'required|in:efectivo,transferencia,tarjeta',
+            'payment_note' => 'nullable|string',
+        ]);
+
+        $payment = Payment::find($validatedData['id']);
+
+        if ($payment->due_date < now()->toDateString() || $payment->status === 'atrasado') {
+            $validatedData['extra_payment'] = round(($payment->credit->amount / $payment->credit->term_months) * ($payment->credit->interest_rate / 100), 2);
             $validatedData['total'] = $payment->amount + $validatedData['extra_payment'];
         }
         $validatedData['status'] = 'pago realizado';
         $validatedData['paid_date'] = now()->toDateString();
+        $validatedData['processed_by'] = Auth::id();
+
         $payment->update($validatedData);
-        //reporte
+
+        // reporte
         $credit = $payment->credit;
         $payments = Payment::where('credit_id', $credit->id)->get();
 
@@ -149,7 +157,8 @@ class CreditController extends Controller
         ]);
         $report->save();
 
-        $paymentsToShow = $credit->payments()->paginate(10);
+        $paymentsToShow = $credit->payments()->paginate(8);
+
         return view('payments', ['payments' => $paymentsToShow, 'credit' => $credit]);
     }
 }

@@ -9,7 +9,7 @@
         </x-danger-button>
     </div>
 
-    <div class="bg-white rounded-xl px-4 py-8"  x-data="{ selected: null }>
+    <div class="bg-white rounded-xl px-4 py-8" x-data="{ selected: null }">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-5">
             Crédito #{{ $credit->id }}: Pagos de {{ $credit->client->name }}
         </h2>
@@ -147,13 +147,19 @@
                             {{ $text }}
                         </span>
 
-                        <span x-data="" x-on:click.prevent="$dispatch('open-modal', 'pay-payment'); selected = @js($payment)" class="bg-secondary rounded-lg py-2.5 px-4 text-primary font-semibold cursor-pointer">
-                            Pagar
-                        </span>
+                        @if (!($payment->status === 'pago realizado'))
+                            <span x-data=""
+                                x-on:click.prevent="$dispatch('open-modal', 'pay-payment'); selected = @js($payment)"
+                                class="bg-secondary rounded-lg py-2.5 px-4 text-primary font-semibold cursor-pointer">
+                                Pagar
+                            </span>
+                        @endif
                     </div>
                 </div>
             @endforeach
         </div>
+
+        {{ $payments->links() }}
 
         <x-modal name="pay-payment" focusable>
             <form method="post" class="p-6">
@@ -166,16 +172,29 @@
 
                 <x-text-input type="hidden" name="id" required x-bind:value="selected?.id" />
 
-                <!-- Correo Electrónico -->
+                <!-- Tipo de pago -->
                 <div class="mb-4">
-                    <x-input-label for="email" value="Correo Electrónico" class="mb-1" />
-                    <x-text-input id="email" class="block w-full" type="email" name="email" required
-                        autocomplete="email" placeholder="carlosrv@gmail.com" />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    <x-input-label for="payment_type" value="Tipo de pago" class="mb-1" />
+                    <x-select-input id="payment_type" class="block w-full" name="payment_type" required
+                        autocomplete="payment_type">
+                        <option value="">Seleccione un tipo</option>
+                        <option value="efectivo">Efectivo</option>
+                        <option value="transferencia">Transferencia</option>
+                        <option value="tarjeta">Tarjeta</option>
+                    </x-select-input>
+                    <x-input-error :messages="$errors->get('payment_type')" class="mt-2" />
+                </div>
+
+                <!-- Nota adjunta -->
+                <div class="mb-4">
+                    <x-input-label for="payment_note" value="Nota del pago (Opcional)" class="mb-1" />
+                    <x-text-input id="payment_note" class="block w-full" type="text" name="payment_note"
+                        autocomplete="payment_note" placeholder="" />
+                    <x-input-error :messages="$errors->get('payment_note')" class="mt-2" />
                 </div>
 
                 <x-primary-button class="w-full">
-                    Añadir Empleado
+                    Pagar
                 </x-primary-button>
             </form>
         </x-modal>

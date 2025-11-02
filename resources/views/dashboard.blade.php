@@ -80,7 +80,8 @@
                             start.setMonth(start.getMonth() + Number(this.selectedTerm));
                     
                             // Ajustar día si sobrepasa el fin del mes
-                            const finalDate = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+                            const finalDate = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 23, 59, 59);
+                            console.log(finalDate);
                             this.endDate = finalDate.toISOString().split('T')[0];
                         }
                     }"
@@ -99,7 +100,7 @@
                                     class="block w-full rounded-md border-gray-300"
                                     x-bind:disabled="!selected || monthsArray.length === 0" x-model="selectedTerm"
                                     x-on:change="calculateEndDate()">
-                                    <option value="" disabled x-show="!selected">Seleccione meses</option>
+                                    <option value="" x-show="!selected">Seleccione meses</option>
                                     <template x-for="m in monthsArray" :key="m">
                                         <option :value="m" x-text="m + (m === 1 ? ' mes' : ' meses')">
                                         </option>

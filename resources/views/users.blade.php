@@ -205,24 +205,24 @@
 
                 <!-- Nombre -->
                 <div class="mb-4">
-                    <x-input-label for="name" value="Nombre" class="mb-1" />
-                    <x-text-input id="name" class="block w-full" type="text" name="name" required
+                    <x-input-label for="editName" value="Nombre" class="mb-1" />
+                    <x-text-input id="editName" class="block w-full" type="text" name="name" required
                         autocomplete="name" placeholder="Carlos Ramirez" x-bind:value="selected?.name" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
                 <!-- Correo Electrónico -->
                 <div class="mb-4">
-                    <x-input-label for="email" value="Correo Electrónico" class="mb-1" />
-                    <x-text-input id="email" class="block w-full" type="email" name="email" required
+                    <x-input-label for="editEmail" value="Correo Electrónico" class="mb-1" />
+                    <x-text-input id="editEmail" class="block w-full" type="email" name="email" required
                         autocomplete="email" placeholder="carlosrv@gmail.com" x-bind:value="selected?.email" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
                 <!-- Contraseña -->
                 <div class="mb-4">
-                    <x-input-label for="password" value="Contraseña" class="mb-1" />
-                    <x-text-input id="password" class="block w-full" type="password" name="password"
+                    <x-input-label for="editPassword" value="Contraseña" class="mb-1" />
+                    <x-text-input id="editPassword" class="block w-full" type="password" name="password"
                         autocomplete="password" placeholder="**********" />
                     <p class="text-xs text-gray-500 mt-1">
                         Deja este campo vacío si no deseas cambiar la contraseña.
@@ -232,8 +232,8 @@
 
                 <!-- Estado -->
                 <div class="mb-4">
-                    <x-input-label for="status" value="Estado" class="mb-1" />
-                    <x-select-input id="status" class="block w-full" name="status" required
+                    <x-input-label for="editStatus" value="Estado" class="mb-1" />
+                    <x-select-input id="editStatus" class="block w-full" name="status" required
                         autocomplete="status" x-bind:value="selected?.status">
                         <option value="">Seleccione un estado</option>
                         <option value="active">Activado</option>
@@ -244,8 +244,8 @@
 
                 <!-- Rol -->
                 <div class="mb-4">
-                    <x-input-label for="role_id" value="Rol" class="mb-1" />
-                    <x-select-input id="role_id" class="block w-full" name="role_id" required
+                    <x-input-label for="editRole_id" value="Rol" class="mb-1" />
+                    <x-select-input id="editRole_id" class="block w-full" name="role_id" required
                         autocomplete="role_id" x-bind:value="selected?.role.id">
                         <option value="">Seleccione un rol</option>
                         @foreach ($roles as $role)
