@@ -195,7 +195,7 @@
                         <th scope="col" class="p-3 font-medium">Fecha de Solicitud</th>
                         <th scope="col" class="p-3 font-medium">Fecha de Finalización</th>
                         <th scope="col" class="p-3 font-medium">Estado</th>
-                        {{-- <th scope="col" class="p-3 font-medium">Acciones</th> --}}
+                        <th scope="col" class="p-3 font-medium">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -208,7 +208,7 @@
                                 {{ $credit->client->name }}
                             </td>
                             <td class="px-3 py-4">
-                                {{ $credit->term_months }}
+                                {{ $credit->term_months }} meses
                             </td>
                             <td class="px-3 py-4">
                                 {{ number_format($credit->interest_rate, 2) }}%
@@ -262,7 +262,7 @@
                             </td>
                             <td class="px-3 py-4">
                                 {{-- EDITAR CRÉDITO --}}
-                                {{-- <span x-data
+                                <span x-data
                                     x-on:click="$dispatch('open-modal', 'edit-credit'); selected = @js($credit); console.log(selected)"
                                     class="inline-flex border-2 border-orange-300 rounded-md bg-orange-50 px-2 py-1.5 cursor-pointer transition">
                                     <svg width="20" height="20" viewBox="0 0 17 15" fill="none"
@@ -271,7 +271,7 @@
                                             d="M11.1172 10.1836L11.9922 9.30859C12.1289 9.17188 12.375 9.28125 12.375 9.47266V13.4375C12.375 14.1758 11.7734 14.75 11.0625 14.75H1.4375C0.699219 14.75 0.125 14.1758 0.125 13.4375V3.8125C0.125 3.10156 0.699219 2.5 1.4375 2.5H8.90234C9.09375 2.5 9.20312 2.74609 9.06641 2.88281L8.19141 3.75781C8.13672 3.8125 8.08203 3.8125 8.02734 3.8125H1.4375V13.4375H11.0625V10.3477C11.0625 10.293 11.0625 10.2383 11.1172 10.1836ZM15.3828 4.6875L8.21875 11.8516L5.73047 12.125C5.01953 12.207 4.41797 11.6055 4.5 10.8945L4.77344 8.40625L11.9375 1.24219C12.5664 0.613281 13.5781 0.613281 14.207 1.24219L15.3828 2.41797C16.0117 3.04688 16.0117 4.05859 15.3828 4.6875ZM12.7031 5.50781L11.1172 3.92188L6.03125 9.00781L5.8125 10.8125L7.61719 10.5938L12.7031 5.50781ZM14.4531 3.34766L13.2773 2.17188C13.168 2.03516 12.9766 2.03516 12.8672 2.17188L12.0469 2.99219L13.6328 4.60547L14.4805 3.75781C14.5898 3.62109 14.5898 3.45703 14.4531 3.34766Z"
                                             fill="#FFB400" />
                                     </svg>
-                                </span> --}}
+                                </span>
 
                                 {{-- ELIMINAR CRÉDITO --}}
                                 {{-- <span x-data
@@ -303,70 +303,24 @@
                     Editar Crédito - <span x-text="selected?.id"></span>
                 </h2>
 
-                <!-- Cliente -->
+                <x-text-input type="hidden" name="id" required x-bind:value="selected?.id" />
+
+                <!-- Estado -->
                 <div class="mb-4">
-                    <x-input-label for="client_id" value="Cliente" class="mb-1" />
-                    <x-select-input id="client_id" class="block w-full" name="client_id" required
-                        autocomplete="client_id" x-bind:value="selected?.client.id">
-                        <option value="">Seleccione un cliente</option>
-                        @foreach ($clients as $client)
-                            <option value="{{ $client->id }}">{{ $client->name }}</option>
-                        @endforeach
+                    <x-input-label for="editStatus" value="Estado" class="mb-1" />
+                    <x-select-input id="editStatus" class="block w-full" name="status" required
+                        autocomplete="status" x-bind:value="selected?.status">
+                        <option value="">Seleccione un estado</option>
+                        <option value="pending">Pendiente</option>
+                        <option value="approved">Aprobado</option>
+                        <option value="rejected">Rechazado</option>
+                        <option value="paid">Pagado</option>
                     </x-select-input>
-                    <x-input-error :messages="$errors->get('client_id')" class="mt-2" />
-                </div>
-
-                <!-- Producto Financiero -->
-                <div class="mb-4">
-                    <x-input-label for="product_id" value="Producto Financiero" class="mb-1" />
-                    <x-select-input id="product_id" class="block w-full" name="product_id" required
-                        autocomplete="product_id"
-                        x-on:change="
-                            selected = products.find(p => p.id == $event.target.value) || null"
-                        x-bind:value="selected?.product.id">
-                        <option value="">Seleccione un producto financiero</option>
-                        @foreach ($products as $product)
-                            <option value="{{ $product->id }}">{{ $product->name }}</option>
-                        @endforeach
-                    </x-select-input>
-                    <x-input-error :messages="$errors->get('product_id')" class="mt-2" />
-                </div>
-
-                <!-- Cantidad -->
-                <div class="mb-4">
-                    <x-input-label for="amount" value="Cantidad" class="mb-1" />
-                    <div class="flex gap-2">
-                        <x-text-input id="amount" class="block w-full" type="number" step="any"
-                            name="amount" required autocomplete="amount" x-bind:value="selected?.amount" />
-
-                        <span class="inline-flex items-center bg-gray-200 rounded-md px-4">
-                            Soles
-                        </span>
-                    </div>
-                    <x-input-error :messages="$errors->get('amount')" class="mt-2" />
-                </div>
-
-                <!-- Fechas -->
-                <div class="grid grid-cols-2 gap-2 mb-4">
-                    <!-- Fecha Inicial -->
-                    <div>
-                        <x-input-label for="start_date" value="Fecha Inicial" class="mb-1" />
-                        <x-text-input id="start_date" class="block w-full bg-gray-200" type="date"
-                            name="start_date" required autocomplete="start_date" placeholder="dd/mm/yyyy" readonly
-                            x-bind:value="selected?.start_date" />
-                        <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
-                    </div>
-                    <!-- Fecha Final -->
-                    <div>
-                        <x-input-label for="end_date" value="Fecha Final" class="mb-1" />
-                        <x-text-input id="end_date" class="block w-full" type="date" name="end_date" required
-                            autocomplete="end_date" min="{{ $today }}" x-bind:value="selected?.end_date" />
-                        <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
-                    </div>
+                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
                 </div>
 
                 <x-primary-button class="w-full">
-                    Actualizar Crédito
+                    Generar Crédito
                 </x-primary-button>
             </form>
         </x-modal>

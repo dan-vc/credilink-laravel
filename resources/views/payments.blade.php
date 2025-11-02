@@ -112,7 +112,16 @@
                         default:
                             break;
                     }
+
+                    if (
+                        $payment->due_date < now()->toDateString() &&
+                        ($payment->paid_date === null || $payment->paid_date > $payment->due_date)
+                    ) {
+                        $class = 'gradient-red';
+                        $text = 'Atrasado';
+                    }
                 @endphp
+
 
                 <div class="{{ $class }} rounded-xl p-5 sm:p-6 text-white shadow-lg payment-card"
                     data-keywords="pago 1 no pagado falta pagar 9/10/2025 1.00">
@@ -136,7 +145,13 @@
                         </p>
                         <p class="text-sm">
                             <span class="font-semibold">Pago Extra:</span> <span class="italic">
-                                {{ 'S/. ' . $payment->extra_payment ?? 'No pagado' }}
+                                @if (
+                                    $payment->due_date < now()->toDateString() &&
+                                        ($payment->paid_date === null || $payment->paid_date > $payment->due_date))
+                                    {{ 'S/. ' . round(($payment->credit->amount / $payment->credit->term_months) * ($payment->credit->interest_rate / 100), 2) }}
+                                @else
+                                    {{ 'S/. ' . $payment->extra_payment ?? 'No pagado' }}
+                                @endif
                             </span>
                         </p>
                     </div>

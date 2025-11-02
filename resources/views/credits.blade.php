@@ -32,7 +32,7 @@
                             break;
 
                         case 'rejected':
-                            $class = 'gradient-red';
+                            $class = 'gradient-red opacity-60 pointer-events-none';
                             $text = 'Rechazado';
                             break;
 

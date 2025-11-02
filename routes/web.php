@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('dashboard', [CreditController::class, 'index'])->name('dashboard');
     Route::post('dashboard', [CreditController::class, 'store'])->name('dashboard.store');
+    Route::put('dashboard', [CreditController::class, 'update']);
     
     Route::get('users', [UserController::class, 'index'])->name('users');
     Route::post('users', [UserController::class, 'store']);

@@ -101,6 +101,23 @@ class CreditController extends Controller
 
     }
 
+    public function update(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'id' => 'required|numeric|exists:credits,id',
+                'status' => 'required|in:pending,approved,rejected,paid',
+            ]);
+
+            $credit = Credit::find($validatedData['id']);
+            $credit->update($validatedData);
+
+            return redirect()->route('dashboard')->with('success', 'Credito actualizado exitosamente.');
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
+
     public function showCreditsByClient(Client $client)
     {
         $credits = $client->credits()->paginate(10);
@@ -136,26 +153,35 @@ class CreditController extends Controller
         $payment->update($validatedData);
 
         // reporte
-        $credit = $payment->credit;
-        $payments = Payment::where('credit_id', $credit->id)->get();
+        try {
+            $credit = $payment->credit;
+            $payments = Payment::where('credit_id', $credit->id)->get();
+    
+            $totalPaid = $payments->where('status', 'pago realizado')->sum('amount');
+            $pendingBalance = $credit->amount - $totalPaid;
+            $monthsPaid = $payments->where('status', 'pago realizado')->count();
+            $monthsPending = $credit->term_months - $monthsPaid;
+            $interestAccrued = $payments->sum('extra_payment');
 
-        $totalPaid = $payments->where('status', 'pago realizado')->sum('amount');
-        $pendingBalance = $credit->amount - $totalPaid;
-        $monthsPaid = $payments->where('status', 'pago realizado')->count();
-        $monthsPending = $credit->term_months - $monthsPaid;
-        $interestAccrued = $payments->sum('extra_payment');
-
-        $report = Report::firstOrNew(['credit_id' => $credit->id]);
-        $report->fill([
-            'report_date' => now(),
-            'total_paid' => $totalPaid,
-            'pending_balance' => $pendingBalance,
-            'months_paid' => $monthsPaid,
-            'months_pending' => $monthsPending,
-            'interest_accured' => $interestAccrued,
-            'client_id' => $credit->client_id,
-        ]);
-        $report->save();
+            $credit->update([
+                'paid_balance' => $totalPaid
+            ]);
+    
+            $report = Report::firstOrNew(['credit_id' => $credit->id]);
+            $report->fill([
+                'report_date' => now(),
+                'total_paid' => $totalPaid,
+                'pending_balance' => $pendingBalance,
+                'months_paid' => $monthsPaid,
+                'months_pending' => $monthsPending,
+                'interest_accured' => $interestAccrued,
+                'client_id' => $credit->client_id,
+            ]);
+            $report->save();
+            //code...
+        } catch (\Throwable $th) {
+            dd($th);
+        }
 
         $paymentsToShow = $credit->payments()->paginate(8);
 
