@@ -98,7 +98,7 @@ class CreditController extends Controller
     public function changeStatus(Request $request) {
         $validatedData = $request->validate([
             'id' => 'required|numeric|exists:credits,id',
-            'status' => 'required|in:active,inactive',
+            'status' => 'required|in:approved,rejected,pending,paid',
         ]);
         $credit = Credit::find($validatedData['id']);
         $credit->status = $validatedData['status'];
